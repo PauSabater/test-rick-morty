@@ -30,7 +30,6 @@ export default async function Home() {
     return (
         <>
             <CardsCharacterList cardsData={cardsData as any}/>
-            <pre>{JSON.stringify(cardsData)}</pre>
         </>
     )
 }

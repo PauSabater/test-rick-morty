@@ -1,7 +1,8 @@
 import styles from './characterPage.module.scss'
 import { CardCharacterDetailed, IPreviousNextCharacter } from "@/components/CardCharacterDetailed/CardCharacterDetailed"
 import { LinkBack } from '@/components/LinkBack/LinkBack'
-import { urlApiRoot } from '@/utils/constances'
+import { LinkNextOrPrevious } from '@/components/LinkNextOrPrevious/LinkNextOrPrevious'
+import { urlApiRoot } from '@/utils/constants'
 import { getApiUrl, getNameFromSlug, getSlugFromName } from "@/utils/utils"
 
 
@@ -69,17 +70,30 @@ export default async function Page({ params }: { params: { character: string } }
                 <CardCharacterDetailed
                     name={dataCharacter.name}
                     srcImage={dataCharacter.image}
-                    description={dataCharacter.planet}
+                    // description={dataCharacter.planet}
                     planet={dataCharacter.location.name}
                     gender={dataCharacter.gender}
                     status={dataCharacter.status}
                     species={dataCharacter.species}
                     firstEpisode={dataEpisode}
-                    previousCharacter={dataPreviousCharacter}
-                    nextCharacter={dataNextCharacter}
                 />
                 </div>
-                <pre>{JSON.stringify(dataPreviousCharacter)}</pre>
+
+                <div className={styles.linkContainer}>
+                    <LinkNextOrPrevious
+                        path={getSlugFromName(dataPreviousCharacter.name)}
+                        text={'Previous'}
+                        textLink={dataPreviousCharacter.name}
+                        srcImage={dataPreviousCharacter.srcImage}
+                    />
+                    <LinkNextOrPrevious
+                        path={getSlugFromName(dataNextCharacter.name)}
+                        text={'Next'}
+                        textLink={dataNextCharacter.name}
+                        srcImage={dataNextCharacter.srcImage}
+                        isNext={true}
+                    />
+                </div>
             </>
         )
     }

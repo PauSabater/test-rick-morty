@@ -1,3 +1,4 @@
+import { getSlugFromName } from '@/utils/utils'
 import { LinkNextOrPrevious } from '../LinkNextOrPrevious/LinkNextOrPrevious'
 import styles from './cardCharacterDetailed.module.scss'
 import { useEffect, useRef, useState } from 'react'
@@ -15,15 +16,14 @@ export interface IPreviousNextCharacter {
 
 interface ICardCharacter {
     name: string,
-    description: string,
     srcImage: string,
     planet: string,
     gender: string,
     species: string,
     status: string,
     firstEpisode: IDataEpisode,
-    nextCharacter: IPreviousNextCharacter,
-    previousCharacter: IPreviousNextCharacter
+    // nextCharacter: IPreviousNextCharacter,
+    // previousCharacter: IPreviousNextCharacter
     // srcImage: string,
     // name: string,
     // status: 'Alive' | 'Dead' | 'unknown',
@@ -41,16 +41,12 @@ interface ICardCharacter {
  */
 export function CardCharacterDetailed({
     name,
-    description,
     srcImage,
     planet,
     gender,
     species,
     status,
     firstEpisode,
-    nextCharacter,
-    previousCharacter
-    // name
  }: ICardCharacter) {
 
 
@@ -86,21 +82,14 @@ export function CardCharacterDetailed({
                         intro='Status'
                         text={status}
                     />
-                    {/* <p>{planet}</p>
-                    <p>{gender}</p>
-                    <p>{species}</p>
-                    <p>{status}</p>
-                    <p>{firstEpisode}</p> */}
                     <div className={styles.episodeContainer}>
                         <p>First Episode</p>
                         <p className={styles.episodeTitle}>{firstEpisode.name}</p>
                         <p className={styles.episode}>{firstEpisode.episode}</p>
                         <p className={styles.episode}>{firstEpisode.airDate}</p>
                     </div>
-                    <LinkNextOrPrevious path={'/'} text={'Back to list'} />
                 </div>
             </div>
-
         </>
     )
 }

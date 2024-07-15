@@ -1,0 +1,44 @@
+.link {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    column-gap: 30px;
+    height: 70px;
+    border: 1px dotted var(--c-grey-light);
+    border-radius: var(--br-base);
+    padding: 0 50px;
+    background-color: transparent;
+    transition: background-color var(--tr-base);
+
+    &:hover {
+        background-color: var(--c-grey-lightest);
+    }
+
+    svg {
+        height: 20px;
+        width: auto;
+    }
+
+    img {
+        height: 50px;
+        width: 50px;
+        border-radius: 25px;
+    }
+
+    p {
+        font-weight: 300;
+    }
+
+    p:last-child {
+        font-weight: 550;
+    }
+}
+
+.next {
+    flex-direction: row-reverse;
+    justify-content: right;
+
+    svg {
+        transform: scaleX(-1);
+    }
+}
