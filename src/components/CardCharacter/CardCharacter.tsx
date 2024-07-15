@@ -2,6 +2,7 @@ import Link from 'next/link'
 import styles from './cardCharacter.module.scss'
 import { useEffect, useRef, useState } from 'react'
 import { getSlugFromName } from '@/utils/utils'
+import Image from "next/image"
 
 export interface ICardCharacter {
     srcImage: string,
@@ -30,8 +31,10 @@ export function CardCharacter({
                 src={srcImage}
                 alt={nameCharacter}
                 className={styles.image}
+                width={450}
+                height={450}
             />
-            <p className={styles.text}>{nameCharacter}</p>
+            <p className={styles.nameCharacter}>{nameCharacter}</p>
         </Link>
     )
 }

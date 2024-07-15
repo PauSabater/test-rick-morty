@@ -20,6 +20,7 @@ async function getData() {
 
 export default async function Home() {
     const data = await getData()
+
     const cardsData: ICardsCharacter = data.results.map((character: any) => {
         return {
             srcImage: character.image,
@@ -29,7 +30,9 @@ export default async function Home() {
 
     return (
         <>
-            <CardsCharacterList cardsData={cardsData as any}/>
+            <CardsCharacterList
+                cardsData={cardsData as any}
+            />
         </>
     )
 }

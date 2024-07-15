@@ -21,11 +21,12 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
         <div className={styles.container}>
             {/* <pre>{JSON.stringify(cardsData)}</pre> */}
             {
-                cardsData.map((card) => {
+                cardsData.map((card, i) => {
                     return (
                         <CardCharacter
                             srcImage={card.srcImage}
                             nameCharacter={card.nameCharacter}
+                            key={`${card.nameCharacter}-${i}`}
                         />
                     )
                 })

@@ -1,6 +1,7 @@
 .containerCard {
     cursor: pointer;
     overflow: hidden;
+    margin-bottom: var(--mg-xs);
 }
 
 .image {
@@ -13,4 +14,10 @@
     display: grid;
     grid-template-columns: 50% 50%;
     width: 100%;
+}
+
+.nameCharacter {
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    color: var(--c-font-light);
 }
