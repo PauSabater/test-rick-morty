@@ -7,3 +7,7 @@ export const getSlugFromName = (name: string): string => {
 export const getNameFromSlug = (slug: string): string => {
     return slug.replace(/-/g, ' ')
 }
+
+export const getApiUrl = (path: string): string => {
+    return `https://rickandmortyapi.com/api/${path}`
+}

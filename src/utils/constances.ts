@@ -1,0 +1,1 @@
+export const urlApiRoot: string = 'https://rickandmortyapi.com/api/'

@@ -1,7 +1,6 @@
 import Image from "next/image"
 import styles from "./page.module.css"
 import { Header } from "@/components/Header/Header"
-import '../styles/variables.scss'
 import { CardsCharacterList, ICardsCharacter } from "@/components/CardsCharacterList/CardsCharacterList"
 
 async function getData() {
@@ -30,12 +29,8 @@ export default async function Home() {
 
     return (
         <>
-        <Header />
-        <main className={styles.main}>
             <CardsCharacterList cardsData={cardsData as any}/>
             <pre>{JSON.stringify(cardsData)}</pre>
-
-        </main>
         </>
     )
 }

@@ -1,4 +1,9 @@
-import { getNameFromSlug, getSlugFromName } from "@/utils/utils"
+import styles from './characterPage.module.scss'
+import { CardCharacterDetailed, IPreviousNextCharacter } from "@/components/CardCharacterDetailed/CardCharacterDetailed"
+import { LinkBack } from '@/components/LinkBack/LinkBack'
+import { urlApiRoot } from '@/utils/constances'
+import { getApiUrl, getNameFromSlug, getSlugFromName } from "@/utils/utils"
+
 
 
 export async function generateStaticParams() {
@@ -10,17 +15,80 @@ export async function generateStaticParams() {
     return apiResponse.results.map((character: any) => ({
         character: getSlugFromName(character.name)
     }))
-  }
+}
 
 export default async function Page({ params }: { params: { character: string } }) {
 
-    const apiResponse = await fetch(`https://rickandmortyapi.com/api/character/?name=${getNameFromSlug(params.character)}`).then((res) => res.json())
+    const characterName: string = getNameFromSlug(params.character)
+    const urlFetch = getApiUrl(`character/?name=${characterName}`)
+    const apiResponse = await fetch(urlFetch).then((res) => res.json())
+
+    if (apiResponse.results[0]) {
+
+        const dataCharacter = apiResponse.results[0]
+        const idCharacter = parseInt(apiResponse.results[0].id)
+
+        // Data episode
+        const urlEpisode = apiResponse.results[0].episode[0]
+        const urlEpisodeFetch = await fetch(urlEpisode).then((res) => res.json())
+        const dataEpisode = {
+            name: urlEpisodeFetch.name || '',
+            airDate: urlEpisodeFetch.air_date || '',
+            episode: urlEpisodeFetch.episode || ''
+        }
 
 
-    return (
+        /**
+        * Get the previous and next character
+        *
+        * @param {string} url                        - URL to fetch the character
+        * @returns {Promise<IPreviousNextCharacter>} - The previous or next character
+        **/
+        const getPreviousNextCharacter = async (url: string): Promise<IPreviousNextCharacter>=> {
+            const responseCharacter = await fetch(url).then((res) => res.json())
+
+            return {
+                name: responseCharacter?.name || '',
+                srcImage: responseCharacter?.image || ''
+            }
+        }
+
+        const dataPreviousCharacter: IPreviousNextCharacter = (idCharacter > 1)
+            ? await getPreviousNextCharacter(getApiUrl(`character/${idCharacter - 1}`))
+            : { name: '', srcImage: '' }
+
+        const dataNextCharacter: IPreviousNextCharacter = (idCharacter !== 800)
+            ? await getPreviousNextCharacter(getApiUrl(`character/${idCharacter + 1}`))
+            : { name: '', srcImage: '' }
+
+
+        return (
+            <>
+                <LinkBack path={'/'} text={'Back to list'} />
+                <div className={styles.pageContainer}>
+                <CardCharacterDetailed
+                    name={dataCharacter.name}
+                    srcImage={dataCharacter.image}
+                    description={dataCharacter.planet}
+                    planet={dataCharacter.location.name}
+                    gender={dataCharacter.gender}
+                    status={dataCharacter.status}
+                    species={dataCharacter.species}
+                    firstEpisode={dataEpisode}
+                    previousCharacter={dataPreviousCharacter}
+                    nextCharacter={dataNextCharacter}
+                />
+                </div>
+                <pre>{JSON.stringify(dataPreviousCharacter)}</pre>
+            </>
+        )
+    }
+
+    else return (
         <>
-            <pre>{JSON.stringify(apiResponse)}</pre>
-        <div>My Post: {params.character}</div>
+            <div className={styles.pageContainer}>
+                <p>Character not found</p>
+            </div>
         </>
     )
 }
