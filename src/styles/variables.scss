@@ -1,0 +1,91 @@
+@use './mixins.scss';
+
+:root {
+    --page-content-width: clamp(200px, 85vw, 1600px);
+
+    --fs-lg: 1.3rem;
+    --fs-global: 1.1rem;
+    --fs-sm: 0.95rem;
+    --fs-xs: 0.75rem;
+    --fs-2xs: 0.65rem;
+
+    // Margins
+    --mg-xs: 5px;
+    --mg-sm: 10px;
+    --mg-md: 15px;
+    --mg-lg: 22.5px;
+    --mg-xl: 30px;
+    --mg-2xl: 40px;
+    --mg-3xl: 50px;
+
+    // Transitions
+    --tr-faster: 0.1s;
+    --tr-fast: 0.2s;
+    --tr-base: 0.3s;
+    --tr-slow: 0.5s;
+    --tr-slower: 0.9s;
+
+    // Colors
+    --c-grey-lightest: hsl(0, 0%, 96%);
+    --c-grey-lighter: hsl(0, 0%, 90%);
+    --c-grey-light: hsl(0, 0%, 80%);
+    --c-grey: hsl(0, 0%, 50%);
+    --c-grey-dark: hsl(0, 0%, 35%);
+    --c-grey-darker: hsl(0, 0%, 20%);
+
+    --page-bg: white;
+    --c-font-global: rgb(4, 4, 4);
+    --c-btn-search-bar: rgb(239, 239, 239);
+    --c-br-transparent: transparent;
+    --c-font-light: rgb(51, 51, 51);
+    --bg-range: #ddd;
+    --br-slider-gradient: linear-gradient(270deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+
+    @include mixins.mobile-tablet {
+        --page-content-width: calc(100vw - 40px);
+        --fs-global: 1rem;
+    }
+
+    @include mixins.mobile {
+        --page-content-width: calc(100vw - 40px);
+    }
+}
+
+html {
+    font-family: 'Inter Variable', sans-serif;
+
+    p, button, input {
+        line-height: 1.5;
+        font-family: 'Inter Variable', sans-serif;
+        font-size: var(--fs-global);
+        color: var(--c-font-global);
+    }
+}
+
+body {
+    font-family: 'Inter Variable', sans-serif;
+    background-color: var(--page-bg);
+
+    &[data-theme='dark'] {
+        --page-bg: #121212;
+        --c-font-global: rgb(247, 247, 247);
+        --c-font-light: rgb(201, 201, 201);
+
+        --c-grey-lightest: hsl(0, 0%, 10%);
+        --c-grey-lighter: hsl(0, 0%, 15%);
+        --c-grey-light: hsl(0, 0%, 20%);
+        --c-btn-search-bar: rgb(18, 18, 18);
+        --c-br-transparent: var(--c-grey);
+        --bg-range: rgb(30, 30, 30);
+        --br-slider-gradient: linear-gradient(270deg, rgba(18,18,18,1) 0%, rgba(18,18,18,0) 99%);
+
+
+        img[data-inversed] {
+            filter: invert(1);
+        }
+
+        img[data-brighter] {
+            filter: brightness(0.8);
+        }
+    }
+}
