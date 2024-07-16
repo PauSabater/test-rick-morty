@@ -1,0 +1,88 @@
+
+
+.containerCompare {
+    display: grid;
+    grid-template-columns: 200px auto;
+}
+
+.container {
+    --width-for-results: 250px;
+
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    margin-left: auto;
+
+    li {
+        list-style: none;
+    }
+}
+
+.title {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.results {
+    --results-content-height: 450px;
+    --results-content-width: 300px;
+
+    position: sticky;
+    margin-top: -100px;
+    height: 100vh;
+    width: var(--results-content-width);
+    padding-top: 75px;
+    top: 0;
+    left: 0;
+    margin-left: calc(var(--results-content-width) * -0.5);
+    border-right: 1px dotted var(--c-grey-light);
+}
+
+.resultsContent {
+    display: flex;
+    flex-direction: column;
+    width: var(--results-content-width);
+    margin: var(--mg-lg) auto 0 auto;
+
+    input:checked + label {
+        background-color: transparent !important;
+
+        p {
+            color: var(--c-font-global);
+        }
+    }
+}
+
+.inputsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.textEmpty {
+    text-align: center;
+}
+
+.episodesInCommon {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--mg-md);
+    grid-template-columns: repeat(4, 20%);
+    height: var(--results-content-list);
+    overflow-y: scroll;
+    height: 40vh;
+    padding-left: 50px;
+
+    h3 {
+        margin-bottom: var(--mg-lg);
+    }
+
+    li {
+        width: 100%;
+        font-size: var(--fs-sm);
+        // list-style: none;
+        margin-bottom: var(--mg-sm);
+        font-weight: 500px;
+    }
+}

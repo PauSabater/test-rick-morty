@@ -1,7 +1,7 @@
 @use './mixins.scss';
 
 :root {
-    --page-content-width: clamp(200px, 85vw, 1400px);
+    --page-content-width: clamp(200px, 85%, 1400px);
 
     --fs-2xl: 2rem;
     --fs-xl: 1.6rem;
@@ -34,8 +34,9 @@
     --c-grey: hsl(0, 0%, 50%);
     --c-grey-dark: hsl(0, 0%, 35%);
     --c-grey-darker: hsl(0, 0%, 20%);
+    --c-white: white;
 
-    --page-bg: white;
+    --page-bg: var(--c-white);
     --c-font-global: rgb(4, 4, 4);
     --c-btn-search-bar: rgb(239, 239, 239);
     --c-br-transparent: transparent;

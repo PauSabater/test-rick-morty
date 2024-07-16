@@ -2,7 +2,7 @@
 
 .header {
     --header-height-total: 100px;
-    --header-height: 50px;
+    --header-height: 55px;
 
     position: fixed;
     top: 0;
@@ -12,6 +12,10 @@
     background: var(--page-bg);
     border-bottom: 1px dotted var(--c-grey-light);
     z-index: 10;
+
+    svg {
+        opacity: 0.9;
+    }
 }
 
 .container {
@@ -27,11 +31,29 @@
     }
 }
 
+.logo {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-right: 80px;
+
+    p {
+        font-size: var(--fs-lg);
+        font-weight: 600;
+        color: var(--c-font-light);
+        margin-left: var(--mg-md);
+    }
+}
+
 .containerSelectors {
     display: flex;
     flex-direction: row;
     width: var(--page-content-width);
     margin: 0 auto;
+}
+
+.item {
+    font-weight: 600;
 }
 
 // @include mixins.mobile-tablet {

@@ -1,9 +1,0 @@
-.container {
-    --cards-list-columns: 3;
-    --grid-gap: 20px;
-
-    display: grid;
-    grid-template-columns: repeat(var(--cards-list-columns), 33.3%);
-    grid-gap: var(--grid-gap);
-    width: calc(100% - var(--grid-gap) * (var(--cards-list-columns) - 1));
-}

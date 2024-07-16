@@ -1,0 +1,45 @@
+.container {
+    --cards-list-columns: 4;
+    --grid-gap: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(var(--cards-list-columns), 25%);
+    grid-gap: var(--grid-gap);
+    width: calc(100% - var(--grid-gap) * (var(--cards-list-columns) - 1));
+    min-height: 100vh;
+
+    li {
+        list-style: none;
+    }
+}
+
+.observed {
+    height: 2px;
+    width: 100%;
+}
+
+.title {
+    margin-bottom: var(--mg-lg);
+    // text-align: center;
+}
+
+.btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0 5px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.jumpTo {
+    margin: 15px 0 0 0;
+    font-size: var(--fs-global);
+}

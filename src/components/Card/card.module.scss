@@ -1,0 +1,86 @@
+.containerCard {
+    cursor: pointer;
+    overflow: hidden;
+    margin-bottom: var(--mg-xs);
+
+    &:hover {
+        .image {
+            // transform: scale(1.02);
+            outline-color: var(--c-grey);
+        }
+
+        .id {
+            opacity: 1;
+        }
+    }
+}
+
+.image {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    outline: 2px solid transparent;
+    transition: outline-color var(--tr-base);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: 100%;
+}
+
+.nameCharacter {
+    font-size: var(--fs-global);
+    font-weight: 600;
+    color: var(--c-font-light);
+}
+
+.containerImage {
+    position: relative;
+    // overflow: hidden;
+    border-radius: var(--br-base);
+}
+
+.loader {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    background-color: #e2e5e7;
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+    background-size: 15vw 100%;
+    background-repeat: no-repeat;
+    background-position: left -40px top 0;
+    animation: shine 1s ease infinite;
+
+    &[data-display="true"] {
+        opacity: 1;
+        transition: opacity var(--tr-slow) 0.1s;
+    }
+}
+
+@keyframes shine {
+	to {
+		// Move shine from left to right, with offset on the right based on the width of the shine - see background-size
+		background-position: right -40px top 0;
+	}
+}
+
+.containerText {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.id {
+    width: min-content;
+    font-size: var(--fs-xs);
+    color: var(--c-grey);
+    text-align: right;
+    opacity: 0;
+    transition: opacity var(--tr-fast);
+}

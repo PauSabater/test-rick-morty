@@ -1,21 +1,25 @@
 .container {
-    --container-gap: 50px;
+    --container-pd: 25px;
 
     display: grid;
     grid-template-columns: 50% 50%;
-    grid-gap: var(--container-gap);
-    width: calc(100% - var(--container-gap));
+    // grid-gap: var(--container-gap);
+    border-radius: var(--br-base);
+    overflow: hidden;
+    background: var(--c-grey-lightest);
+    width: calc(100%);
     margin-bottom: 50px;
 }
 
 .infoContainer {
     height: 100%;
+    padding: 40px;
 }
 
 .image {
     width: 100%;
     height: auto;
-    border-radius: var(--br-base);
+    margin-right: var(--container-pd);
 }
 
 .name {

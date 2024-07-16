@@ -1,37 +1,18 @@
-import Image from "next/image"
-import styles from "./page.module.css"
-import { Header } from "@/components/Header/Header"
-import { CardsCharacterList, ICardsCharacter } from "@/components/CardsCharacterList/CardsCharacterList"
+import { CardsCharacterList, ICardsCharacter } from "@/components/CardsList/CardsList"
+import { getApiUrl, getHomePageApiData } from "@/utils/utils"
+import { ICardCharacter } from "@/components/Card/Card"
+import { queryBasicCharacterInfo } from "@/utils/queries"
+import { getApiGraphQlData } from "@/utils/apiCalls"
 
-async function getData() {
-    const res = await fetch('https://rickandmortyapi.com/api/character')
-    // The return value is *not* serialized
-    // You can return Date, Map, Set, etc.
-
-    if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error('Failed to fetch data')
-    }
-
-    const response = res.json()
-
-    return response
-}
 
 export default async function Home() {
-    const data = await getData()
-
-    const cardsData: ICardsCharacter = data.results.map((character: any) => {
-        return {
-            srcImage: character.image,
-            nameCharacter: character.name
-        }}
-    ) as ICardsCharacter
+    const apiData = await getApiGraphQlData(queryBasicCharacterInfo(1))
 
     return (
         <>
+            {/* <pre>{JSON.stringify(apiData.data.characters.results)}</pre> */}
             <CardsCharacterList
-                cardsData={cardsData as any}
+                cardsData={apiData.data.characters.results}
             />
         </>
     )
