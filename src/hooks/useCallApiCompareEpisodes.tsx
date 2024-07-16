@@ -13,7 +13,7 @@ export const useApiCallCompareCharactersEpisodes = () => {
     const [error, setError] = useState(null)
 
     const callApi = useCallback(async (firstId: string, secondId: string) => {
-        setData(null)
+        // setData(null)
         setLoading(true)
         setError(null)
 

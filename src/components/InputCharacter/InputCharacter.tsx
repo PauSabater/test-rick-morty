@@ -2,8 +2,6 @@ import { getSlugFromName } from "@/utils/utils"
 import styles from './inputCharacter.module.scss'
 
 
-
-
 export const InputCharacter = ({id, image, name, checked, onChange, isInModal}: {
         id: string | undefined,
         image: string | undefined,

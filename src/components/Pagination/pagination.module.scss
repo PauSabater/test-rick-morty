@@ -1,0 +1,15 @@
+.btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0 5px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.jumpTo {
+    margin: 15px 0 0 0;
+    font-size: var(--fs-global);
+}

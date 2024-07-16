@@ -1,0 +1,19 @@
+.input {
+    height: auto;
+    border-radius: var(--br-base);
+    background-color: var(--c-grey-lightest);
+    border: 1px solid var(--c-br-transparent);
+    outline: 1px solid transparent;
+    padding: 0 30px;
+    width: -webkit-fill-available;
+    transition: border-color var(--tr-base), outline-color var(--tr-base);
+
+    &:hover {
+        border-color: var(--c-grey-light);
+    }
+
+    &:focus {
+        border-color: var(--c-grey-light);
+        outline-color: var(--c-grey-light);
+    }
+}

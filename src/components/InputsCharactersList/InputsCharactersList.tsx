@@ -64,7 +64,6 @@ export function InputsCharactersList({ inputsData }: IInputsCharacterList) {
 
     useEffect(()=> {
         if (lastSelected !== '' && previousSelected !== '') {
-            console.log('compare')
             const lastSelectedId = inputsData.find(character => character.name === lastSelected)?.id
             const previousSelectedId = inputsData.find(character => character.name === previousSelected)?.id
 
@@ -80,18 +79,19 @@ export function InputsCharactersList({ inputsData }: IInputsCharacterList) {
         console.log('data change')
         console.log(data)
         if (data) {
-            console.log('ieeeee inside')
-            console.log(data)
-            console.log(data)
+            setDataCommonEpisodes(data)
         }
-    },[data])
+    },[JSON.stringify(data)])
 
 
 
     const Results = () => {
 
         return (
-            <div className={styles.results} display-results={lastSelected !== '' && previousSelected !== ''}>
+            <div
+                className={styles.results}
+                display-results={(lastSelected !== '' && previousSelected !== '' && data !== null).toString()}
+            >
                 <div className={styles.resultsContent}>
                     <div className={styles.inputsContainer}>
                         {
@@ -102,7 +102,7 @@ export function InputsCharactersList({ inputsData }: IInputsCharacterList) {
                                     onChange={updateSelecterCharacters}
                                     isInModal={true}
                                 />
-                            : <p className={styles.textEmpty}>SELECT A SECOND CHARACTER</p>
+                            : lastSelected ? <p className={styles.textEmpty}>SELECT A SECOND CHARACTER</p> : <></>
                         }
                             <p>
                                 {
@@ -117,30 +117,49 @@ export function InputsCharactersList({ inputsData }: IInputsCharacterList) {
                                     onChange={updateSelecterCharacters}
                                     isInModal={true}
                                 />
-                            : <p className={styles.textEmpty}>SELECT A SECOND CHARACTER</p>
+                            : previousSelected ? <p className={styles.textEmpty}>SELECT A SECOND CHARACTER</p> : <></>
                             }
                     </div>
-                    <EpisodesInCommon/>
+                    {
+                        lastSelected && previousSelected ?
+                            <div className={styles.episodesInCommon}>
+                                <h3>Episodes in common</h3>
+                                <EpisodesInCommon/>
+                            </div>
+                            : <></>
+                    }
                 </div>
             </div>
         )
     }
 
+
     const EpisodesInCommon = () => {
-        return data ?
-            <div className={styles.episodesInCommon}>
-                <h3>Episodes in common</h3>
-                <ul className={styles.episodesList}>
-                    {
-                        data.map((name: string, i: number) => {
-                            return (
-                                <li key={`episode-${i}`}>{name}</li>
-                            )
-                        })
-                    }
-                </ul>
-            </div>
-            : <p>NO DATA</p>
+        if (lastSelected && previousSelected && !loading) return (
+            <>
+                {
+                    dataCommonEpisodes && dataCommonEpisodes?.length > 0 ?
+                    <>
+                        <ul className={styles.episodesList}>
+                            {
+                                data.map((name: string, i: number) => {
+                                    return (
+                                        <li key={`episode-${i}`}>{name}</li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </>
+                    : !loading
+                        ? <p>{`No matching episodes for the characters ${previousSelected} and ${lastSelected}`}</p>
+                        : <></>
+
+                }
+            </>
+
+        )
+        else if (loading) return <p>Loading...</p>
+        else return <></>
     }
 
     return (
@@ -165,24 +184,6 @@ export function InputsCharactersList({ inputsData }: IInputsCharacterList) {
                     }
                 </ul>
             </div>
-            {/* <div ref={refObserved} className={styles.observed}/> */}
-
         </div>
     )
 }
-
-// const InputCharacter = ({id, image, name}: {    id: string,
-//     image: string,
-//     name: string})=> {
-
-//     const idInput = getSlugFromName(name)
-//     return (
-//         <>
-//         <input type='checkbox' id={idInput}></input>
-//         <label htmlFor={idInput}>
-//             <p>{id}</p>
-//             <p>{name}</p>
-//         </label>
-//         </>
-//     )
-// }

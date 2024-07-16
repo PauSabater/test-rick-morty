@@ -1,8 +1,8 @@
 
 
-export const queryBasicCharacterInfo = (pageNumber = 1) => {
+export const queryBasicCharacterInfo = (params: string) => {
     return `{
-        characters(page: ${pageNumber}) {
+        characters(${params}) {
             results {
                 id
                 name
@@ -11,6 +11,8 @@ export const queryBasicCharacterInfo = (pageNumber = 1) => {
         }
     }`
 }
+
+//page: ${pageNumber}
 
 export const queryCharacterEpisodes = (id: string): string => {
     return `{

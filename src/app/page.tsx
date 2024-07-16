@@ -6,7 +6,7 @@ import { getApiGraphQlData } from "@/utils/apiCalls"
 
 
 export default async function Home() {
-    const apiData = await getApiGraphQlData(queryBasicCharacterInfo(1))
+    const apiData = await getApiGraphQlData(queryBasicCharacterInfo(`page: 1`))
 
     return (
         <>

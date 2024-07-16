@@ -16,6 +16,10 @@
 .observed {
     height: 2px;
     width: 100%;
+
+    &[data-displayed="false"] {
+        display: none;
+    }
 }
 
 .title {
@@ -23,23 +27,13 @@
     // text-align: center;
 }
 
-.btn {
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0 5px;
-
-    &:hover {
-        text-decoration: underline;
-    }
-}
-
 .head {
     display: flex;
     justify-content: space-between;
 }
 
-.jumpTo {
-    margin: 15px 0 0 0;
-    font-size: var(--fs-global);
+.loading {
+    height: 500px;
+    background: red;
+    width: 100%;
 }

@@ -43,6 +43,7 @@
     --c-font-light: rgb(51, 51, 51);
     --bg-range: #ddd;
     --br-base: 15px;
+    --br-sm: 7px;
     --br-slider-gradient: linear-gradient(270deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
 
     @include mixins.mobile-tablet {

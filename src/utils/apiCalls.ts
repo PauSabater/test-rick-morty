@@ -20,7 +20,7 @@ export async function fetchAllCharacters() {
     const allCharacters = []
 
     for (let i = 1; i <= totalPages; i++) {
-        const response = await getApiGraphQlData(queryBasicCharacterInfo(i))
+        const response = await getApiGraphQlData(queryBasicCharacterInfo(`page: ${i}`))
         const characters = response.data.characters.results
 
         if (response) {

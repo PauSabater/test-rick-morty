@@ -1,0 +1,14 @@
+.inputsContainer {
+    --filters-inputs-height: 60px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    height: var(--filters-inputs-height);
+    width: clamp(350px, 70%, 850px);
+    margin-bottom: var(--mg-md);
+
+    button {
+        width: var(--filters-inputs-height);
+    }
+}

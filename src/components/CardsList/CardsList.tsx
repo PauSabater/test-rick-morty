@@ -6,6 +6,8 @@ import styles from './cardsList.module.scss'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { useApiCall } from '@/hooks/useCallApi'
 import { queryBasicCharacterInfo } from '@/utils/queries'
+import { Filters } from '../Filters/Filters'
+import { Pagination } from '../Pagination/Pagination'
 
 export interface ICardsCharacter {
     cardsData: ICardCharacter[]
@@ -29,7 +31,7 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
     // datos para renderizar
     const [cardsDataState, setCardsDataState] = useState<ICardCharacter[]>(cardsData)
     // hook para llamar a la API
-    const { data, callApi } = useApiCall()
+    const { loading, data, callApi } = useApiCall()
 
     /**
      * Añade un observer para detectar cuando el elemento bottom de la pantalla llega al bottom del elemento
@@ -60,7 +62,7 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
         stateRefPage.current = currentPage
 
         if (currentPage > 1) {
-            callApi(queryBasicCharacterInfo(currentPage))
+            callApi(queryBasicCharacterInfo(`page: ${currentPage}`))
         }
     }, [currentPage])
 
@@ -82,15 +84,12 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
         setCurrentPage(pageToJumpTo)
     }
 
-    const ButtonPagination = ({number}:{number: number}) => {
+    const CardsLoader = ()=> {
         return (
-            <button
-                className={styles.btn}
-                onClick={() => jumpToPage(number)}
-            >
-                {number}
-            </button>
-        )
+            Array.from({length: 12}, (_, i) => i).map((_, i) => {
+                return <CardCharacter key={`card-${i}`} showSkeleton={true}/>
+            }
+        ))
 
     }
 
@@ -98,27 +97,27 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
         <>
             <div className={styles.head}>
                 <h1 className={styles.title}>All characters</h1>
-                <p className={styles.jumpTo}>jump to #
-                    {
-                        [200, 400, 600, 800].map((num, i) => {
-                            return (
-                                <Fragment key={`fr-${num}`}>
-                                    {i > 0 ? <span key={`span-${num}`} > ... </span> : <></>}
-                                    <ButtonPagination key={`btn-${num}`} number={num}/>
-                                </Fragment>
-                            )
-                        })
-                    }
-                </p>
+                <Pagination
+                    paginations={[200, 400, 600, 800]}
+                    callBackOnBtnClick={jumpToPage}
+                />
             </div>
+            <Filters />
             <ul ref={refContainer} className={styles.container}>
                 {
                     cardsDataState.map((card, i) => {
                         return <CardCharacter {...card} key={`card-${i}`}/>
                     })
                 }
+                {
+                    loading ? <CardsLoader/> : <></>
+                }
             </ul>
-            <div ref={refObserved} className={styles.observed}/>
+            <div
+                data-display={!loading}
+                ref={refObserved}
+                className={styles.observed}
+            />
         </>
     )
 }

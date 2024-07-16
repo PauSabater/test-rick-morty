@@ -73,6 +73,7 @@
     overflow-y: scroll;
     height: 40vh;
     padding-left: 50px;
+    animation: fadeIn var(--tr-base);
 
     h3 {
         margin-bottom: var(--mg-lg);
@@ -85,4 +86,14 @@
         margin-bottom: var(--mg-sm);
         font-weight: 500px;
     }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+
 }

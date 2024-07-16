@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from 'react'
 import { getSlugFromName } from '@/utils/utils'
 
 export interface ICardCharacter {
-    id: string,
-    image: string,
-    name: string,
+    id?: string,
+    image?: string,
+    name?: string,
     imageLazy?: boolean,
     showSkeleton?: boolean
 }
@@ -48,23 +48,36 @@ export function CardCharacter({
     return (
         <li>
             <Link
-                href={getSlugFromName(name)}
+                href={getSlugFromName(name || '#')}
                 className={styles.containerCard}
+                data-is-loader={showSkeleton === true}
             >
                 <div className={styles.containerImage}>
-                    <img
-                        src={image}
-                        alt={name}
-                        className={styles.image}
-                        width={335}
-                        height={335}
-                        loading={imageLazy ? 'lazy' : 'eager'}
-                        // onLoad={() => setDisplayLoader(false)}
-                    />
+                    {
+                        image && !showSkeleton ?
+                            <img
+                                src={image}
+                                alt={name}
+                                className={styles.image}
+                                width={335}
+                                height={335}
+                                loading={imageLazy ? 'lazy' : 'eager'}
+                                // onLoad={() => setDisplayLoader(false)}
+                            />
+                        :
+                            <>
+                                <svg className={styles.image} viewBox="0 0 710 710" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="710" height="710" fill="#D9D9D9"/>
+                                </svg>
+                                <div className={styles.loader}></div>
+                            </>
+
+                    }
+
                 </div>
                 <div className={styles.containerText}>
-                    <p className={styles.name}>{name}</p>
-                    <p className={styles.id}>{`#${id}`}</p>
+                    <p className={styles.name}>{name || 'dummy'}</p>
+                    <p className={styles.id}>{id ? `#${id}` : ''}</p>
                 </div>
             </Link>
         </li>
