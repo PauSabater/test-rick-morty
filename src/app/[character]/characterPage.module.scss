@@ -1,15 +1,24 @@
+@use '../../styles/mixins.scss';
+
 .pageContainer {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: var(--page-content-width);
+    width: 100%;
+    padding: 0 40px;
 }
 
 .linkContainer {
     display: grid;
     grid-template-columns: 50% 50%;
-    grid-gap: 50px;
     margin-top: auto;
     width: 100%;
+}
+
+@include mixins.desktop-sm {
+    .pageContainer {
+        padding: 0;
+    }
 }

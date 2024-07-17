@@ -9,3 +9,7 @@
 @mixin desktop-sm {
     @media (max-width: 1300px) { @content; }
 }
+
+@mixin desktop-md {
+    @media (max-width: 1550px) { @content; }
+}

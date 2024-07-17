@@ -1,5 +1,4 @@
 import { ICardCharacter } from "@/components/Card/Card"
-import { ICardsCharacter } from "@/components/CardsList/CardsList"
 
 
 export const getSlugFromName = (name: string): string => {
@@ -51,4 +50,12 @@ export const getHomePageApiData = (data: any): ICardCharacter[] => {
         ) as ICardCharacter[]
 
     else return []
+}
+
+export const setModePersist = (value: string)=> {
+    localStorage.setItem('mode', value)
+}
+
+export const getModePersist = (): string => {
+    return localStorage.getItem('mode') || ''
 }

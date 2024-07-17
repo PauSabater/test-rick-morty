@@ -1,7 +1,10 @@
+@use '../../styles/mixins.scss';
+
 .container {
     --cards-list-columns: 4;
     --grid-gap: 20px;
 
+    position: relative;
     display: grid;
     grid-template-columns: repeat(var(--cards-list-columns), 25%);
     grid-gap: var(--grid-gap);
@@ -24,7 +27,7 @@
 
 .title {
     margin-bottom: var(--mg-lg);
-    // text-align: center;
+    font-size: var(--fs-xl);
 }
 
 .head {
@@ -32,8 +35,31 @@
     justify-content: space-between;
 }
 
-.loading {
-    height: 500px;
-    background: red;
-    width: 100%;
+.noResults {
+    position: absolute;
+    font-size: var(--fs-global);
+    font-weight: 600;
+    margin: var(--mg-md) 0;
+    text-align: center;
+    left: 50%;
+    top: 40px;
+    transform: translateX(-50%);
+}
+
+@include mixins.mobile-tablet {
+    .container {
+        grid-template-columns: 50% 50%;
+    }
+
+    .head {
+        flex-direction: column;
+        margin-bottom: var(--mg-lg);
+    }
+}
+
+@include mixins.mobile {
+    .container {
+        grid-template-columns: 100%;
+        width: 100%;
+    }
 }

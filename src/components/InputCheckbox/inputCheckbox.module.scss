@@ -1,0 +1,28 @@
+.inputContainer {
+    width: min-content;
+
+}
+
+.label {
+    cursor: pointer;
+    display: flex;
+    width: min-content;
+    padding: 10px 20px;
+    border: 1px solid var(--c-grey-light);
+    outline: 1px solid transparent;
+    border-radius: var(--br-base);
+    min-height: 45px;
+    white-space: nowrap;
+    margin: 3px;
+    transition: border-color var(--tr-base);
+}
+
+.input {
+    display: none;
+}
+
+.input:checked + .label {
+    background-color: var(--c-grey-lightest);
+    border-color: var(--c-grey-dark);
+    outline: 1px solid var(--c-grey-dark);
+}

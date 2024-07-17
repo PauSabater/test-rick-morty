@@ -29,6 +29,16 @@
     border-radius: 15px;
     outline: 2px solid transparent;
     transition: outline-color var(--tr-base);
+    animation: fadeIn var(--tr-base) ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .container {

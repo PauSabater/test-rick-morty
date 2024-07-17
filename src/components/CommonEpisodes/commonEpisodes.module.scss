@@ -1,8 +1,14 @@
 
+@use '../../styles/mixins.scss';
 
 .containerCompare {
+    --results-content-height: 450px;
+    --results-content-width: 400px;
+
     display: grid;
-    grid-template-columns: 200px auto;
+    grid-template-columns: var(--results-content-width) auto;
+    width: 100vw;
+    margin: auto;
 }
 
 .container {
@@ -17,15 +23,16 @@
     }
 }
 
+.listContainer {
+    padding: 0 50px;
+}
+
 .title {
     margin-bottom: 30px;
     text-align: center;
 }
 
 .results {
-    --results-content-height: 450px;
-    --results-content-width: 300px;
-
     position: sticky;
     margin-top: -100px;
     height: 100vh;
@@ -96,4 +103,67 @@
         opacity: 1;
     }
 
+}
+
+@include mixins.desktop-md {
+    .containerCompare {
+        --results-content-width: 350px;
+    }
+
+    .container {
+        grid-template-columns: repeat(3, 33.3%);
+    }
+}
+
+@include mixins.desktop-sm {
+    .containerCompare {
+        --results-content-width: 300px;
+    }
+
+    .container {
+        grid-template-columns: repeat(2, 50%);
+    }
+}
+
+@include mixins.mobile-tablet {
+    .containerCompare {
+        --results-content-width: 200px;
+    }
+
+
+    .listContainer {
+        padding: 0 10px;
+    }
+
+    .container {
+        grid-template-columns: 50% 50%;
+
+        label {
+            min-height: 50px;
+
+            img {
+                height: 40px;
+                width: 40px;
+            }
+        }
+    }
+}
+
+@include mixins.mobile {
+
+    .containerCompare {
+        --results-content-height: 450px;
+        --results-content-width: 400px;
+
+        grid-template-columns: 0 auto;
+
+    }
+
+    .containerCompare {
+        --results-content-width: 200px;
+    }
+
+    .container {
+        grid-template-columns: 100%;
+    }
 }

@@ -4,8 +4,7 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import { useApiCall } from '@/hooks/useCallApi'
 import { ICardCharacter } from '@/components/Card/Card'
 import { fetchAllCharacters } from '@/utils/apiCalls'
-import { InputsCharactersList } from '@/components/InputsCharactersList/InputsCharactersList'
-
+import { CommonEpisodes } from '@/components/CommonEpisodes/CommonEpisodes'
 
 
 
@@ -20,8 +19,6 @@ export default async function Page() {
     const apiData = await fetchAllCharacters()
 
     return (
-        <>
-            <InputsCharactersList inputsData={apiData} />
-        </>
+        <CommonEpisodes inputsData={apiData} />
     )
 }

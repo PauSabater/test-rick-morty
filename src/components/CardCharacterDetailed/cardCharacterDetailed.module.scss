@@ -1,14 +1,15 @@
+@use '../../styles/mixins.scss';
+
 .container {
     --container-pd: 25px;
 
     display: grid;
     grid-template-columns: 50% 50%;
-    // grid-gap: var(--container-gap);
     border-radius: var(--br-base);
     overflow: hidden;
     background: var(--c-grey-lightest);
     width: calc(100%);
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .infoContainer {
@@ -53,9 +54,6 @@
 .episodeContainer {
     position: relative;
     width: 100%;
-    // background: var(--c-grey-lightest);
-    // border-radius: var(--br-base);
-    // padding: var(--pd-lg);
     margin-top: var(--mg-2xl);
 
     &:after {
@@ -81,5 +79,23 @@
         font-weight: 600;
         margin: 0;
         margin-bottom: var(--mg-md);
+    }
+}
+
+@include mixins.desktop-sm {
+    .container {
+        p {
+            font-size: var(--fs-global);
+        }
+    }
+}
+
+@include mixins.mobile-tablet {
+    .container {
+        grid-template-columns: 100%;
+    }
+
+    .infoContainer {
+        padding: 20px;
     }
 }

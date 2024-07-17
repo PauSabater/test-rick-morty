@@ -1,6 +1,9 @@
+@use '../../styles/mixins.scss';
+
 .inputsContainer {
     --filters-inputs-height: 60px;
 
+    position: relative;
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -10,5 +13,52 @@
 
     button {
         width: var(--filters-inputs-height);
+    }
+}
+
+.filtersContainer {
+    pointer-events: none;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    top: var(--filters-inputs-height);
+    left: 0;
+    width: 600px;
+    height: auto;
+    padding: 30px;
+    opacity: 0;
+    border-radius: var(--br-base);
+    background-color: var(--page-bg);
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);
+    transition: opacity var(--tr-base);
+    z-index: 5;
+
+    &[data-is-open="true"] {
+        pointer-events: all;
+        opacity: 1;
+    }
+
+    p {
+        font-size: var(--fs-global);
+        font-weight: 600;
+        margin: var(--mg-sm) 0 var(--mg-xs) 3px;
+        width: 100%;
+    }
+
+    button {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+}
+
+@include mixins.mobile {
+    .inputsContainer {
+        width: 100%;
+    }
+
+    .filtersContainer {
+        width: 100%;
+        padding: 10px;
     }
 }

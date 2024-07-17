@@ -1,11 +1,7 @@
 'use client'
 
-import { getApiUrl, getHomePageApiData, getSlugFromName } from '@/utils/utils'
-import { CardCharacter, ICardCharacter } from '../Card/Card'
-import styles from './inputsCharactersList.module.scss'
-import { Fragment, useEffect, useRef, useState } from 'react'
-import { useApiCall } from '@/hooks/useCallApi'
-import { queryBasicCharacterInfo, queryCharacterEpisodes } from '@/utils/queries'
+import styles from './commonEpisodes.module.scss'
+import { useEffect, useRef, useState } from 'react'
 import { InputCharacter } from '../InputCharacter/InputCharacter'
 import { useApiCallCompareCharactersEpisodes } from '@/hooks/useCallApiCompareEpisodes'
 
@@ -25,7 +21,7 @@ export interface IInputsCharacterList {
  * @param {string}         props.srcImage      - src para la imagen
  * @param {string}         props.name          - Nombre para el personaje
  */
-export function InputsCharactersList({ inputsData }: IInputsCharacterList) {
+export function CommonEpisodes({ inputsData }: IInputsCharacterList) {
 
     const refContainer = useRef<HTMLUListElement>(null)
     const [isFirstSelect, setIsFirstSelect] = useState<boolean>(true)
@@ -33,7 +29,6 @@ export function InputsCharactersList({ inputsData }: IInputsCharacterList) {
     const [lastSelected, setLastSelected] = useState<string>('')
     const [dataCommonEpisodes, setDataCommonEpisodes] = useState<{name: string}[] | null>(null)
 
-    // const { data, callApi } = useApiCall()
 
     const { data, loading, error, callApi } = useApiCallCompareCharactersEpisodes()
 

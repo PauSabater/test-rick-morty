@@ -11,9 +11,10 @@ export const useApiCall = () => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
-    const callApi = useCallback(async (query: string) => {
+    const callApi = useCallback(async (queryObj: string) => {
         setLoading(true)
         setError(null)
+        console.log("in call api")
 
         try {
             const response = await fetch('https://rickandmortyapi.com/graphql', {
@@ -22,15 +23,19 @@ export const useApiCall = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    query
+                    query: queryObj
                 }),
               })
+
+            console.log("HEY IN CALL HOOK")
 
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
 
             const result = await response.json()
 
-            setData(query.includes('characters') ? result.data.characters.results : result)
+            console.log(result)
+
+            setData(queryObj.includes('characters') ? result.data.characters.results : result)
         }
         catch (err) {
             setError(err as React.SetStateAction<null>)

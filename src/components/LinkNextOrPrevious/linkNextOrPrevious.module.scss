@@ -1,12 +1,16 @@
+@use '../../styles/mixins.scss';
+
 .link {
+    box-sizing: border-box;
     display: flex;
+    gap: 25px;
     align-items: center;
     justify-content: left;
-    column-gap: 30px;
-    height: 70px;
+    height: 80px;
     border: 1px dotted var(--c-grey-light);
     border-radius: var(--br-base);
     padding: 0 50px;
+    margin-right: 20px;
     background-color: transparent;
     transition: background-color var(--tr-base);
 
@@ -37,8 +41,28 @@
 .next {
     flex-direction: row-reverse;
     justify-content: right;
+    margin: 0 0 0 20px;
 
     svg {
         transform: scaleX(-1);
+    }
+}
+
+@include mixins.desktop-sm {
+    .link {
+        gap: 10px;
+        padding: 0 20px;
+        margin-right: 5px;
+    }
+
+    .next {
+        margin: 0 0 0 5px;
+    }
+}
+
+@include mixins.mobile {
+    .link {
+        padding: 0 10px;
+        height: 120px;
     }
 }

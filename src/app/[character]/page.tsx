@@ -2,9 +2,8 @@ import styles from './characterPage.module.scss'
 import { CardCharacterDetailed, IPreviousNextCharacter } from "@/components/CardCharacterDetailed/CardCharacterDetailed"
 import { LinkBack } from '@/components/LinkBack/LinkBack'
 import { LinkNextOrPrevious } from '@/components/LinkNextOrPrevious/LinkNextOrPrevious'
-import { urlApiRoot } from '@/utils/constants'
+import { PageContainer } from '@/components/PageContainer/PageContainer'
 import { getApiUrl, getNameFromSlug, getSlugFromName } from "@/utils/utils"
-
 
 
 export async function generateStaticParams() {
@@ -21,7 +20,7 @@ export default async function Page({ params }: { params: { character: string } }
     const urlFetch = getApiUrl(`character/?name=${characterName}`)
     const apiResponse = await fetch(urlFetch).then((res) => res.json())
 
-    if (apiResponse.results[0]) {
+    if (apiResponse && apiResponse.results && apiResponse?.results[0]) {
 
         const dataCharacter = apiResponse.results[0]
         const idCharacter = parseInt(apiResponse.results[0].id)
@@ -34,7 +33,6 @@ export default async function Page({ params }: { params: { character: string } }
             airDate: urlEpisodeFetch.air_date || '',
             episode: urlEpisodeFetch.episode || ''
         }
-
 
         /**
         * Get the previous and next character
@@ -61,37 +59,37 @@ export default async function Page({ params }: { params: { character: string } }
 
 
         return (
-            <>
-                <LinkBack path={'/'} text={'Back to list'} />
+            <PageContainer>
                 <div className={styles.pageContainer}>
-                <CardCharacterDetailed
-                    name={dataCharacter.name}
-                    srcImage={dataCharacter.image}
-                    // description={dataCharacter.planet}
-                    planet={dataCharacter.location.name}
-                    gender={dataCharacter.gender}
-                    status={dataCharacter.status}
-                    species={dataCharacter.species}
-                    firstEpisode={dataEpisode}
-                />
-                </div>
+                    <LinkBack path={'/'} text={'Back to list'} />
+                    <CardCharacterDetailed
+                        name={dataCharacter.name}
+                        srcImage={dataCharacter.image}
+                        // description={dataCharacter.planet}
+                        planet={dataCharacter.location.name}
+                        gender={dataCharacter.gender}
+                        status={dataCharacter.status}
+                        species={dataCharacter.species}
+                        firstEpisode={dataEpisode}
+                    />
 
-                <div className={styles.linkContainer}>
-                    <LinkNextOrPrevious
-                        path={getSlugFromName(dataPreviousCharacter.name)}
-                        text={'Previous'}
-                        textLink={dataPreviousCharacter.name}
-                        srcImage={dataPreviousCharacter.srcImage}
-                    />
-                    <LinkNextOrPrevious
-                        path={getSlugFromName(dataNextCharacter.name)}
-                        text={'Next'}
-                        textLink={dataNextCharacter.name}
-                        srcImage={dataNextCharacter.srcImage}
-                        isNext={true}
-                    />
+                    <div className={styles.linkContainer}>
+                        <LinkNextOrPrevious
+                            path={getSlugFromName(dataPreviousCharacter.name)}
+                            text={'Previous'}
+                            textLink={dataPreviousCharacter.name}
+                            srcImage={dataPreviousCharacter.srcImage}
+                        />
+                        <LinkNextOrPrevious
+                            path={getSlugFromName(dataNextCharacter.name)}
+                            text={'Next'}
+                            textLink={dataNextCharacter.name}
+                            srcImage={dataNextCharacter.srcImage}
+                            isNext={true}
+                        />
+                    </div>
                 </div>
-            </>
+            </PageContainer>
         )
     }
 
@@ -103,3 +101,10 @@ export default async function Page({ params }: { params: { character: string } }
         </>
     )
 }
+
+export async function generateMetadata({ params }: {params: any}) {
+    return {
+        title: `${params.character.replace('-', ' ')}`,
+        description: `all Rick and Morty characters`
+    }
+  }

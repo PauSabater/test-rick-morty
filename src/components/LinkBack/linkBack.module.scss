@@ -1,0 +1,14 @@
+.link {
+    align-self: start;
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--mg-md);
+    font-weight: 600;
+    color: var(--c-font-light);
+
+    svg {
+        height: 15px;
+        width: auto;
+        margin-right: 15px;
+    }
+}

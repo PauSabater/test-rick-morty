@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import styles from './header.module.scss'
-import { useEffect } from 'react'
+import { ButtonMode } from '../ButtonMode/ButtonMode'
 
 /**
  * Renders the header of the app
@@ -21,7 +21,8 @@ export function Header() {
                     <p>Rick And Morty</p>
                 </Link>
 
-                <Link href={'./compare'} className={styles.item}>compare</Link>
+                <Link href={'./compare'} className={styles.item}>common episodes</Link>
+                {/* <ButtonMode/> */}
             </div>
         </header>
     )

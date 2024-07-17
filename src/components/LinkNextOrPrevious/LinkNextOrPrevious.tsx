@@ -23,16 +23,6 @@ export function LinkNextOrPrevious({
 }: ILinkNextOrPrevious) {
 
 
-    /**
-     * Set the display style and theme from the local storage
-     * when the component is mounted
-     */
-    // useEffect(()=> {
-    //     dispatch(setDisplayStyle(getDisplaStylePersist() as TDisplayStyle))
-    //     dispatch(setCurrentTheme(getThemePersist() as TImageThemes))
-    //     dispatch(setSeachValue(getSearchValuePersist() as TImageThemes))
-    // },[])
-
     const TextLink = ()=> {
         return (
             <div className={styles.textLink}>
@@ -59,10 +49,11 @@ export function LinkNextOrPrevious({
         )
     }
 
-    return (
+    if (textLink) return (
         <Link href={path} className={`${styles.link} ${isNext ? styles.next : ''}`}>
             <ImgLink/>
             <TextLink/>
         </Link>
     )
+    else return <div></div>
 }

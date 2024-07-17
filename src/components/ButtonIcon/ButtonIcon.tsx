@@ -13,7 +13,7 @@ export const ButtonIcon = ({callbackOnClick, icon, value, alt, background}: IBut
 
     return (
         <button
-            onClick={callbackOnClick()}
+            onClick={() => callbackOnClick()}
             className={`${styles.button} ${background ? styles[background] : ''}`}
             value={value}
         >

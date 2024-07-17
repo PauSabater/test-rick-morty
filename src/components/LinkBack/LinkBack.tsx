@@ -8,19 +8,11 @@ import styles from './linkBack.module.scss'
  */
 export function LinkBack({path, text}: {path: string, text: string}) {
 
-
-    /**
-     * Set the display style and theme from the local storage
-     * when the component is mounted
-     */
-    // useEffect(()=> {
-    //     dispatch(setDisplayStyle(getDisplaStylePersist() as TDisplayStyle))
-    //     dispatch(setCurrentTheme(getThemePersist() as TImageThemes))
-    //     dispatch(setSeachValue(getSearchValuePersist() as TImageThemes))
-    // },[])
-
     return (
-        <Link href={path} >
+        <Link href={path} className={styles.link}>
+            <svg width="39" height="66" viewBox="0 0 39 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M35 3.5L5.5 33L35 62.5" stroke="var(--c-grey-dark)" stroke-width="6" stroke-linecap="round"/>
+            </svg>
             {text}
         </Link>
     )

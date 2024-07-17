@@ -21,12 +21,12 @@ export const Pagination = ({paginations, callBackOnBtnClick}: IPagination)=> {
     }
 
     return (
-        <p className={styles.pagination}>jump to #
+        <p className={styles.pagination}>to #
             {
                 paginations.map((num, i) => {
                     return (
                         <Fragment key={`fr-${num}`}>
-                            {i > 0 ? <span key={`span-${num}`} > ... </span> : <></>}
+                            {i > 0 ? <span key={`span-${num}`} > - </span> : <></>}
                             <ButtonPagination key={`btn-${num}`} number={num}/>
                         </Fragment>
                     )
