@@ -29,6 +29,10 @@
     input {
         margin-left: 50px;
     }
+
+    a, p {
+        color: var(--c-font-global);
+    }
 }
 
 .logo {
