@@ -15,19 +15,13 @@ export const InputCheckbox = ({name, value, id, onChangeCallback}: IInputCheckbo
     const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
         const checked = e.target.checked
         setIsChecked(checked)
-        // onSelectionUpdate(id, e.target.checked)
-        onChangeCallback(id, checked)
+        onChangeCallback(id, true)
     }
 
-    const handleInputClick = () => {
+    const handleInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
         if (isChecked) {
             setIsChecked(false)
-            // onSelectionUpdate(id, false)
             onChangeCallback(id, false)
-        } else {
-            setIsChecked(true)
-            // onSelectionUpdate(id, true)
-            onChangeCallback(id, true)
         }
     }
 
@@ -40,8 +34,8 @@ export const InputCheckbox = ({name, value, id, onChangeCallback}: IInputCheckbo
                 value={value}
                 className={styles.input}
                 checked={isChecked}
-                // onChange={(e) => handleCheckboxChange(e)}
-                onClick={handleInputClick}
+                onChange={(e) => handleCheckboxChange(e)}
+                onClick={(e) => handleInputClick(e)}
             />
             <label className={styles.label} htmlFor={id}>{value}</label>
         </div>

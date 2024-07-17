@@ -71,8 +71,6 @@ export function CommonEpisodes({ inputsData }: IInputsCharacterList) {
     }, [lastSelected, previousSelected])
 
     useEffect(() => {
-        console.log('data change')
-        console.log(data)
         if (data) {
             setDataCommonEpisodes(data)
         }

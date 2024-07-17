@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Sobre el proyecto
 
-## Getting Started
+Este proyecto consta de un ejercicio que extrae datos de la [api de Rick y Morty](https://rickandmortyapi.com/) y los renderiza en páginas generadas con [Next.js](https://nextjs.org).
+El resultado se encuentra en la siguiente url, desplegada mediante Vercel: https://test-rick-morty-pau-sabater.vercel.app/
 
-First, run the development server:
+## Ejecución del proyecto
+
+Primero, instala los nódulos necesarios:
+
+```bash
+npm i
+```
+
+, ejecuta el servidor en modo dev:
 
 ```bash
 npm run dev
-# or
+# o
 yarn dev
-# or
+# o
 pnpm dev
-# or
+# o
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000) con el navegador para ver el resultado.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estructura del proyecto
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+.
+├── public                              # Documentos públicos
+└── src/                                # Código source
+    ├── app                             # Generación de páginas
+    ├── components/                     # Componentes interficie
+    │   └── [component]/                # Componente
+    │       ├── [componnet].tsx         # Fichero tsx componente
+    │       └── [styles].module.scss    # Módulo scss
+    ├── hooks                           # React hooks customizados
+    ├── styles                          # Estilos globales
+    └── utils                           # Funciones y constantes reutilizables
 
-## Learn More
+## Lamadas a la API de Rick y Morty
 
-To learn more about Next.js, take a look at the following resources:
+Se ha decidido usar la api graphql dada la mayor eficiencia en relación a los datos recibidos, la menor necesidad de customizar los datos recibidos. Se ha tratado de reutilizar las queries, las cuales se encuentran en `src/utils/queries.ts`. Las llamadas a la API se ejecutan mediante custom hooks para mayor reutilización y facilidad de uso en el componente, las cuales se pueden encontrar en `src/hooks/[customhook.].tsx`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Enfoque general del proyecto
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Se ha tratado de mantener la simplicidad, con el objetivo de una interfaz intuituva, a la vez que un aspecto moderno.
 
-## Deploy on Vercel
+** Listado personajes: ** se la decidido implementar un "infinite scroll", el cual llama a la API cada vez que se llega a las últimas imágenes, debido a la mayor facilidad de uso por parte del usuario. A la vez, se la implementado una paginación de carga los personajes con intervalos de 200. Los filtros actuan de forma que cada vez que se activan se resetean los datos y se renderizan los nuevos pertinentes. Se ha añadido también un input para buscar según el nombre del personaje.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+** Páginas de personajes: ** cada personaje tiene una página dedicada. Se han añadido links a la página anterior y siguiente para facilitar la nagevación entre personajes.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+** Página de comparación: ** la página `/compare` permite seleccionar dos personajes para consultar los episodios comunes. Para generar el resultado se hacen 2 llamadas distintas a la api en el custom hook `src/hooks/useCallApiCompareEpisodes.tsx`
+
+## Métricas de google
+
+Se ha tratado de generar un buen resultado en las métricas de performance, SEO y accessibilidad. Los resultados son buenos, aunque hay un límite debido a que las imágenes recibidas de la API no son óptimas en relación al formato y, segun el caso, el tamaño.
+
+### Performance
+** Páginas renderizadas en servidor: ** El contenido de las páginas es renderizado en el servidor, donde se hacen las llamadas iniciales para la api de Rick y Morty.
+** Imágenes: ** Las imágenes estan dimensionadas en html para evitar 'layout shifts'.
+** Tamaño bundle: ** Se ha evitado usar paquetes js que augmenten el tamaño del bundle y ralentizen la página.
+
+### SEO
+Se han complementado los datos en los <meta> tags. Los links son descriptivos. Las imágenes constan de atributos 'alt'.
+
+### Accesibilidad
+Se ha usado html semántico, con los elementos correspondientes para su uso. Los elementos como buttons sin texto constan de atributos que describen su uso.
+
+### Responsive
+El diseño se ha adaptado a mobile para que se pueda consultar el contenido en todas las pantallas.
+
+### Desplegue
+Ae ha usado [Vercel](https://vercel.com/). para desplegar el projecto, dado la facilidad de integración y el buen rendimiento de la plataforma.
+
+## Aspectos a mejorar
+Hay muchos aspectos a mejorar evidentemente.
+** Interficie: ** El diseño de la interficie podria ser más trabajado.
+** Filtros: ** Los filtros de la lista inicial podrian ser más complejos y permitir más combinaciones.
+** Persistir datos: ** Los parámetros que permiten customizar la lista inicial se podrian guardar en sessionStorage mantener el resultado mientras se navega en la web.
+** Mejorar meta tags: ** Ahora mismo son muy simples y se podrian añadir más parametros.
+** Lista compare: ** Se podrian añadir filtros para evitar tener una lista tan larga.

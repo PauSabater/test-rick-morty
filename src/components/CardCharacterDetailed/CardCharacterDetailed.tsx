@@ -1,7 +1,4 @@
-import { getSlugFromName } from '@/utils/utils'
-import { LinkNextOrPrevious } from '../LinkNextOrPrevious/LinkNextOrPrevious'
 import styles from './cardCharacterDetailed.module.scss'
-import { useEffect, useRef, useState } from 'react'
 
 interface IDataEpisode {
     name: string,
@@ -21,15 +18,7 @@ interface ICardCharacter {
     gender: string,
     species: string,
     status: string,
-    firstEpisode: IDataEpisode,
-    // nextCharacter: IPreviousNextCharacter,
-    // previousCharacter: IPreviousNextCharacter
-    // srcImage: string,
-    // name: string,
-    // status: 'Alive' | 'Dead' | 'unknown',
-    // species: string,
-    // type: string,
-    // gender: string
+    firstEpisode: IDataEpisode
 }
 
 
@@ -57,28 +46,24 @@ export function CardCharacterDetailed({
                     src={srcImage}
                     alt={name}
                     className={styles.image}
+                    width={470}
+                    height={570}
                 ></img>
                 <div className={styles.infoContainer}>
                     <p className={styles.name}>{name}</p>
-                    {/* <p>{description}</p> */}
-                    {/* <p>{srcImage}</p> */}
                     <InfoWithIcon
-                        srcIcon='planet'
                         intro='Origin'
                         text={planet}
                     />
                     <InfoWithIcon
-                        srcIcon='gender'
                         intro='Gender'
                         text={gender}
                     />
                     <InfoWithIcon
-                        srcIcon='gender'
                         intro='Species'
                         text={species}
                     />
                     <InfoWithIcon
-                        srcIcon='gender'
                         intro='Status'
                         text={status}
                     />
@@ -95,12 +80,11 @@ export function CardCharacterDetailed({
 }
 
 const InfoWithIcon = (
-    {srcIcon, intro, text}:
-    {srcIcon: string, intro: string, text: string})=> {
+    {intro, text}:
+    {intro: string, text: string})=> {
 
     return (
         <div className={styles.infoWithIcon}>
-            {/* <img className={styles.icon} height='20' width='20' src={`${srcIcon}.svg`} alt={srcIcon} /> */}
             <p className={styles.infoIntro}>{intro}</p>
             <p className={styles.infoText}>{text}</p>
         </div>

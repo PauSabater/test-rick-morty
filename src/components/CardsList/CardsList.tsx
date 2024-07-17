@@ -68,7 +68,6 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
 
         if (currentPage !== 1 && currentPage !== pageNameFilters) {
             const pageToQuery = currentPage === 0 ? 1 : currentPage
-            console.log('HEU IN EFFECT')
             callApi(queryBasicCharacterInfo(`page: ${pageToQuery}`))
 
         // si se los datos son respuesta de los filtros o búsqueda, se resetean los datos actuales
@@ -131,19 +130,28 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
      * Actualiza datos a mostrar llamando a la api en función de los filtros actualizados
      */
     useEffect(() => {
-        console.log('in useEffect filters')
-        console.log(selectedStatus === null && selectedGender === null && selectedSpecies === null)
 
-        if (selectedStatus === null && selectedGender === null && selectedSpecies === null) return
+        const areFiltersEmpty = selectedStatus === null && selectedGender === null && selectedSpecies === null
+
+        // Este caso se da cuando se han deselecionado todos los filtros
+        if (areFiltersEmpty && currentPage === pageNameFilters) {
+            setCardsDataState([])
+            callApi(queryBasicCharacterInfo(`page: 1`))
+            setCurrentPage(1)
+            return
+        }
+        if (areFiltersEmpty) return
+
 
         const statusFilter = `status: "${selectedStatus || ''}"`
         const genderFilter = `gender: "${selectedGender || ''}"`
         const speciesFilter = `species: "${selectedSpecies || ''}"`
         const filters = [statusFilter, genderFilter, speciesFilter].filter((filter) => filter !== '').join(', ')
+        const queryApi = queryBasicCharacterInfo(`filter: { ${filters} }`)
 
         setCardsDataState([])
         setCurrentPage('filters')
-        callApi(queryBasicCharacterInfo(`filter: { ${filters} }`))
+        callApi(queryApi)
 
     }, [selectedStatus, selectedGender, selectedSpecies])
 
@@ -157,10 +165,6 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
     const updateFilters = (id: string, checked: boolean): void=> {
         const type: string = id.split('-')[0]
         const value: TGender | TSpecies | TStatus = id.split('-')[1] as TGender | TSpecies | TStatus
-
-        console.log('in update filters')
-        console.log(id)
-        console.log(checked)
 
         if (type === 'status') {
             setSelectedStatus(checked ? value as TStatus : null)
