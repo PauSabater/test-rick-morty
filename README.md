@@ -1,7 +1,8 @@
 # Sobre el proyecto
 
 Este proyecto consta de un ejercicio que extrae datos de la [api de Rick y Morty](https://rickandmortyapi.com/) y los renderiza en páginas generadas con [Next.js](https://nextjs.org).
-El resultado se encuentra en la siguiente url, desplegada mediante Vercel: https://test-rick-morty-pau-sabater.vercel.app/
+El resultado se encuentra en la siguiente url, desplegada mediante Vercel:
+https://test-rick-morty-pau-sabater.vercel.app/
 
 ## Ejecución del proyecto
 
@@ -29,16 +30,16 @@ Abre [http://localhost:3000](http://localhost:3000) con el navegador para ver el
 
 ```
 .
-├── public                              # Documentos públicos
+├── public/                             # Documentos públicos
 └── src/                                # Código source
-    ├── app                             # Generación de páginas
+    ├── app/                            # Ficheros generación de páginas
     ├── components/                     # Componentes interficie
     │   └── [component]/                # Componente
-    │       ├── [componnet].tsx         # Fichero tsx componente
+    │       ├── [componente].tsx        # Fichero tsx componente
     │       └── [styles].module.scss    # Módulo scss
-    ├── hooks                           # React hooks customizados
-    ├── styles                          # Estilos globales
-    └── utils                           # Funciones y constantes reutilizables
+    ├── hooks/                          # React hooks customizados
+    ├── styles/                         # Estilos globales
+    └── utils/                          # Funciones y constantes reutilizables
 ```
 
 ## Lamadas a la API de Rick y Morty
