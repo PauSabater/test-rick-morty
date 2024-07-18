@@ -9,6 +9,10 @@
     grid-template-columns: var(--results-content-width) auto;
     width: 100vw;
     margin: auto;
+
+    h2 {
+        margin-bottom: var(--mg-lg);
+    }
 }
 
 .container {
@@ -37,7 +41,7 @@
     margin-top: -100px;
     height: 100vh;
     width: var(--results-content-width);
-    padding-top: 75px;
+    padding: 75px 20px 30px 20px;
     top: 0;
     left: 0;
     margin-left: calc(var(--results-content-width) * -0.5);
@@ -47,7 +51,7 @@
 .resultsContent {
     display: flex;
     flex-direction: column;
-    width: var(--results-content-width);
+    width: 100%;
     margin: var(--mg-lg) auto 0 auto;
 
     input:checked + label {
@@ -62,13 +66,13 @@
 .inputsContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     margin: 0 auto;
 }
 
 .textEmpty {
-    text-align: center;
+    text-align: left;
 }
 
 .episodesInCommon {
@@ -79,7 +83,7 @@
     height: var(--results-content-list);
     overflow-y: scroll;
     height: 40vh;
-    padding-left: 50px;
+    padding-left: 0;
     animation: fadeIn var(--tr-base);
 
     h3 {
@@ -90,9 +94,16 @@
         width: 100%;
         font-size: var(--fs-sm);
         // list-style: none;
-        margin-bottom: var(--mg-sm);
+        margin-bottom: var(--mg-md);
         font-weight: 500px;
     }
+}
+
+.linking {
+    font-size: var(--fs-lg);
+    font-weight: 400;
+    margin-left: 35px;
+    margin-bottom: var(--mg-xs);
 }
 
 @keyframes fadeIn {
@@ -140,6 +151,7 @@
 
         label {
             min-height: 50px;
+            width: webkit-fill-available;
 
             img {
                 height: 40px;
@@ -165,5 +177,49 @@
 
     .container {
         grid-template-columns: 100%;
+    }
+
+    .results {
+        width: 100vw;
+        background: var(--page-bg);
+        height: 40vh;
+        padding: 0 10px 20px 10px;
+        border-top: 2px dotted var(--c-br-transparent);
+        transform: translateY(60vh);
+        overflow: hidden;
+
+        h2 {
+            margin-bottom: var(--mg-xs);
+            font-size: var(--fs-lg);
+        }
+
+        .textEmpty {
+            grid-column-start: 1;
+            grid-column-end: 4;
+            display: flex;
+        }
+
+        .inputsContainer {
+            display: grid;
+            grid-template-columns: 45% 10% 45%;
+
+            label {
+                font-size: var(--fs-sm);
+            }
+
+            img {
+                height: 40px;
+                width: 40px;
+            }
+
+            .linking {
+                margin: auto auto auto 5px;
+
+            }
+        }
+
+        .episodesInCommon {
+            height: 20vh;
+        }
     }
 }

@@ -7,7 +7,15 @@ interface IPagination {
     callBackOnBtnClick: Function
 }
 
-export const Pagination = ({paginations, callBackOnBtnClick}: IPagination)=> {
+/**
+ * Componente para paginación
+ *
+ * @param {number[]}    props.paginations        - Números de la paginación
+ * @param {Function}    props.callBackOnBtnClick - Función para manejar el click en los botones
+ *
+ * @returns {JSX.Element}
+ */
+export const Pagination = ({paginations, callBackOnBtnClick}: IPagination): JSX.Element=> {
 
     const ButtonPagination = ({number}:{number: number}) => {
         return (
@@ -21,7 +29,8 @@ export const Pagination = ({paginations, callBackOnBtnClick}: IPagination)=> {
     }
 
     return (
-        <p className={styles.pagination}>to #
+        <div className={styles.container}>
+            <p>to #</p>
             {
                 paginations.map((num, i) => {
                     return (
@@ -32,6 +41,6 @@ export const Pagination = ({paginations, callBackOnBtnClick}: IPagination)=> {
                     )
                 })
             }
-        </p>
+        </div>
     )
 }

@@ -28,6 +28,7 @@
     padding: 30px;
     opacity: 0;
     border-radius: var(--br-base);
+    border: 2px dotted var(--c-br-transparent);
     background-color: var(--page-bg);
     box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);
     transition: opacity var(--tr-base);
@@ -45,10 +46,26 @@
         width: 100%;
     }
 
-    button {
+    button:not(:last-child) {
         position: absolute;
         right: 20px;
         top: 20px;
+    }
+}
+
+.restartButtonContainer {
+    width: 100%;
+
+    button {
+        white-space: nowrap;
+        margin-top: var(--mg-md);
+        width: auto;
+        font-weight: 500;
+        color: var(--c-fs-global-light);
+
+        img {
+            margin-right: 10px;
+        }
     }
 }
 

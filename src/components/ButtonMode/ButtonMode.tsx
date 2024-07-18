@@ -1,8 +1,8 @@
 'use client'
 
-import { getModePersist, setModePersist } from '@/utils/utils'
+import { setModePersist } from '@/utils/utils'
 import styles from './buttonMode.module.scss'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 
 /**
@@ -12,16 +12,15 @@ import { useEffect, useState } from 'react'
  */
 export function ButtonMode(): JSX.Element {
 
-    const [mode, setMode] = useState<'light' | 'dark'>('light')
+    const [mode, setMode] = useState<'light' | 'dark' | ''>('light')
 
-    useEffect(()=> {
-        const modeFromLocalstorage: string = getModePersist()
+    // useEffect(()=> {
+    //     const modeFromLocalstorage: string = getModePersist()
 
-        if (modeFromLocalstorage) {
-            setMode(modeFromLocalstorage as 'light' | 'dark')
-            document.body.setAttribute('data-theme', modeFromLocalstorage)
-        }
-    })
+    //     if (modeFromLocalstorage) {
+    //         document.body.setAttribute('data-theme', getModePersist() || 'light')
+    //     }
+    // },[])
 
     const onClick = ()=> {
         if (mode === 'light') {

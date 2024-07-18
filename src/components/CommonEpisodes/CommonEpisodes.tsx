@@ -16,12 +16,12 @@ export interface IInputsCharacterList {
 }
 
 /**
- * Renderiza una lista de Cards con la información de los personajes
+ * Renderiza una lista de inputs de personajes para comparar los episodios en común
  *
- * @param {string}         props.srcImage      - src para la imagen
- * @param {string}         props.name          - Nombre para el personaje
+ * @param {IInputData[]}    props.inputsData - Datos de los personajes
+ * @returns {JSX.Element}
  */
-export function CommonEpisodes({ inputsData }: IInputsCharacterList) {
+export function CommonEpisodes({ inputsData }: IInputsCharacterList): JSX.Element {
 
     const refContainer = useRef<HTMLUListElement>(null)
     const [isFirstSelect, setIsFirstSelect] = useState<boolean>(true)
@@ -39,22 +39,30 @@ export function CommonEpisodes({ inputsData }: IInputsCharacterList) {
             setIsFirstSelect(false)
             return
         }
+        // deselecciona el valor previo si se selecciona de nuevo
         else if (previousSelected === value) {
             setPreviousSelected('')
+            return
         }
-
+        // deselecciona el valor segundo si se selecciona de nuevo
         else if (lastSelected === value) {
             setLastSelected('')
+            return
         }
 
-        else if (lastSelected !== '' && previousSelected !== '') {
+        else if ((lastSelected !== '' && previousSelected !== '')
+            || (previousSelected === '' && lastSelected )) {
+            setPreviousSelected(lastSelected)
             setLastSelected(value)
+            return
+        }
+
+        else if (previousSelected && lastSelected === '') {
+            setLastSelected(value)
+            return
         }
 
         else setLastSelected(value)
-
-        // setLastSelected(value)
-
     }
 
     useEffect(()=> {
@@ -77,8 +85,11 @@ export function CommonEpisodes({ inputsData }: IInputsCharacterList) {
     },[JSON.stringify(data)])
 
 
-
-    const Results = () => {
+    /**
+     * Renderiza los resultados
+     * @returns {JSX.Element}
+     */
+    const Results = (): JSX.Element => {
 
         return (
             <div
@@ -86,7 +97,13 @@ export function CommonEpisodes({ inputsData }: IInputsCharacterList) {
                 display-results={(lastSelected !== '' && previousSelected !== '' && data !== null).toString()}
             >
                 <div className={styles.resultsContent}>
+                    <h2>Results</h2>
                     <div className={styles.inputsContainer}>
+                        {
+                            !previousSelected && !lastSelected ?
+                                <p className={styles.textEmpty}>Select two characters from the list 👉🏼</p>
+                                : <></>
+                        }
                         {
                             previousSelected ?
                                 <InputCharacter
@@ -95,11 +112,13 @@ export function CommonEpisodes({ inputsData }: IInputsCharacterList) {
                                     onChange={updateSelecterCharacters}
                                     isInModal={true}
                                 />
-                            : lastSelected ? <p className={styles.textEmpty}>SELECT A SECOND CHARACTER</p> : <></>
+                            : lastSelected
+                                ? <p className={styles.textEmpty}>Select a second character</p>
+                                : <></>
                         }
-                            <p>
+                            <p className={styles.linking}>
                                 {
-                                    lastSelected && previousSelected ? 'AND' : ''
+                                    lastSelected && previousSelected ? '&' : ''
                                 }
                             </p>
                         {
@@ -110,7 +129,9 @@ export function CommonEpisodes({ inputsData }: IInputsCharacterList) {
                                     onChange={updateSelecterCharacters}
                                     isInModal={true}
                                 />
-                            : previousSelected ? <p className={styles.textEmpty}>SELECT A SECOND CHARACTER</p> : <></>
+                            : previousSelected
+                                ? <p className={styles.textEmpty}>Select a second character</p>
+                                : <></>
                             }
                     </div>
                     {
@@ -126,8 +147,11 @@ export function CommonEpisodes({ inputsData }: IInputsCharacterList) {
         )
     }
 
-
-    const EpisodesInCommon = () => {
+    /**
+     * Renderiza los episodios en común
+     * @returns {JSX.Element}
+     */
+    const EpisodesInCommon = (): JSX.Element => {
         if (lastSelected && previousSelected && !loading) return (
             <>
                 {
@@ -159,7 +183,7 @@ export function CommonEpisodes({ inputsData }: IInputsCharacterList) {
         <div className={styles.containerCompare}>
             <Results/>
             <div className={styles.listContainer}>
-                <h2 className={styles.title}>Select two characters to find the common episodes</h2>
+                {/* <h2 className={styles.title}>Select two characters to find the common episodes</h2> */}
                 <ul ref={refContainer} className={styles.container}>
                     {
                         inputsData.map((character, i) => {

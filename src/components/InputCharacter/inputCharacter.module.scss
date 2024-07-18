@@ -47,15 +47,20 @@
 }
 
 .labelModal {
-    border: none;
+    border: 2px dashed transparent;
     justify-content: center;
-    width: auto;
+    width: webkit-fill-available;
+    justify-content: flex-start;
 
     p:last-child {
         font-size: var(--fs-global);
         font-weight: 600;
         margin: 0;
         width: auto;
+    }
+
+    &:hover {
+        border-color: var(--c-grey-light);
     }
 }
 

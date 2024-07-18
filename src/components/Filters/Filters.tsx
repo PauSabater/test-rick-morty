@@ -11,13 +11,25 @@ export type TSpecies = 'Human' | 'Alien' | 'Humanoid' | 'Poopybutthole' | 'Mytho
 interface IFilter {
     onSelectionUpdate: Function,
     onSearchInputSubmit: Function,
-    onButtonRestartClick: Function
+    onButtonRestartClick: Function,
+    searchInputValue: string
 }
 
+/**
+ * Componente para los filtros de la lista
+ *
+ * @param {Function} param.onSelectionUpdate    - Función para actualizar los filtros
+ * @param {Function} param.onSearchInputSubmit  - Función para actualizar la búsqueda
+ * @param {Function} param.onButtonRestartClick - Función para reiniciar los filtros
+ * @param {string}   param.searchInputValue     - Valor del input de búsqueda
+ *
+ * @returns {JSX.Element}
+ */
 export const Filters = ({
         onSelectionUpdate,
         onSearchInputSubmit,
-        onButtonRestartClick
+        onButtonRestartClick,
+        searchInputValue
     }: IFilter)=> {
 
     const status: TStatus[] = ['Alive', 'Dead', 'Unknown']
@@ -38,13 +50,7 @@ export const Filters = ({
             <SearchBar
                 placeholder={'Search by name'}
                 callbackOnSubmit={(value: string) => onSearchInputSubmit(value)}
-            />
-            <ButtonIcon
-                callbackOnClick={onButtonRestartClick}
-                icon={'restart.svg'}
-                value={'restart filters'}
-                alt={'restart filters'}
-                background={'transparent'}
+                searchInputValue={searchInputValue}
             />
 
             <div className={styles.filtersContainer} data-is-open={areFiltersOpen}>
@@ -98,6 +104,16 @@ export const Filters = ({
                         )
                     })
                 }
+                <div className={styles.restartButtonContainer}>
+                    <ButtonIcon
+                        callbackOnClick={onButtonRestartClick}
+                        icon={'restart.svg'}
+                        value={'restart filters'}
+                        alt={'restart filters'}
+                        background={'transparent'}
+                        text={'Restart filters'}
+                    />
+                </div>
             </div>
         </div>
     )

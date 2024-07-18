@@ -1,7 +1,7 @@
 # Sobre el proyecto
 
-Este proyecto consta de un ejercicio que extrae datos de la [api de Rick y Morty](https://rickandmortyapi.com/) y los renderiza en páginas generadas con [Next.js](https://nextjs.org).
-El resultado se encuentra en la siguiente url, desplegada mediante Vercel:
+Este proyecto consta de un ejercicio que extrae datos de la [api de Rick y Morty](https://rickandmortyapi.com/) y los renderiza en páginas generadas con [Next.js](https://nextjs.org).\
+El resultado se encuentra en la siguiente url, desplegada mediante Vercel:\
 https://test-rick-morty-pau-sabater.vercel.app/
 
 ## Ejecución del proyecto
@@ -48,7 +48,7 @@ Se ha decidido usar la api graphql dada la mayor eficiencia en relación a los d
 
 ## Enfoque general del proyecto
 
-Se ha tratado de mantener la simplicidad, con el objetivo de una interfaz intuituva, a la vez que un aspecto moderno.
+Se ha tratado de mantener la simplicidad, con el objetivo de una interfaz intuituva, a la vez que un aspecto moderno y sin estridencias, donde las imágenes del carácter son las protagonistas.
 
 **Listado personajes:** se la decidido implementar un "infinite scroll", el cual llama a la API cada vez que se llega a las últimas imágenes, debido a la mayor facilidad de uso por parte del usuario. A la vez, se la implementado una paginación de carga los personajes con intervalos de 200. Los filtros actuan de forma que cada vez que se activan se resetean los datos y se renderizan los nuevos pertinentes. Se ha añadido también un input para buscar según el nombre del personaje.
 
@@ -61,9 +61,9 @@ Se ha tratado de mantener la simplicidad, con el objetivo de una interfaz intuit
 Se ha tratado de generar un buen resultado en las métricas de performance, SEO y accessibilidad. Los resultados son buenos, aunque hay un límite debido a que las imágenes recibidas de la API no son óptimas en relación al formato y, segun el caso, el tamaño.
 
 ### Performance
-**Páginas renderizadas en servidor:** El contenido de las páginas es renderizado en el servidor, donde se hacen las llamadas iniciales para la api de Rick y Morty.
-**Imágenes:** Las imágenes estan dimensionadas en html para evitar 'layout shifts'.
-**Tamaño bundle:** Se ha evitado usar paquetes js que augmenten el tamaño del bundle y ralentizen la página.
+**Páginas renderizadas en servidor:** El contenido de las páginas es renderizado en el servidor, donde se hacen las llamadas iniciales para la api de Rick y Morty.\
+**Imágenes:** Las imágenes estan dimensionadas en html para evitar 'layout shifts'.\
+**Tamaño bundle:** Se ha evitado usar paquetes js que augmenten el tamaño del bundle y ralentizen la página.\
 
 ### SEO
 Sehan complementado los datos en los <meta> tags. Los links son descriptivos. Las imágenes constan de atributos 'alt'.
@@ -78,9 +78,9 @@ El diseño se ha adaptado a mobile para que se pueda consultar el contenido en t
 Ae ha usado [Vercel](https://vercel.com/). para desplegar el projecto, dado la facilidad de integración y el buen rendimiento de la plataforma.
 
 ## Aspectos a mejorar
-Hay muchos aspectos a mejorar evidentemente.
-**Interficie:** El diseño de la interficie podria ser más trabajado.
-**Filtros:** Los filtros de la lista inicial podrian ser más complejos y permitir más combinaciones.
-**Persistir datos:** Los parámetros que permiten customizar la lista inicial se podrian guardar en sessionStorage mantener el resultado mientras se navega en la web.
-**Mejorar meta tags:** Ahora mismo son muy simples y se podrian añadir más parametros.
+Hay muchos aspectos a mejorar evidentemente.\
+**Interficie:** El diseño de la interficie podria ser más trabajado.\
+**Filtros:** Los filtros de la lista inicial podrian ser más complejos y permitir más combinaciones.\
+**Persistir datos:** Los parámetros que permiten customizar la lista inicial se podrian guardar en sessionStorage mantener el resultado mientras se navega en la web.\
+**Mejorar meta tags:** Ahora mismo son muy simples y se podrian añadir más parametros.\
 **Lista compare:** Se podrian añadir filtros para evitar tener una lista tan larga.

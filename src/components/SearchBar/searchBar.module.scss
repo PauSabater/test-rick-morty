@@ -40,7 +40,7 @@ button.button {
     cursor: pointer;
     position: relative;
     background-color: var(--c-grey-lightest);
-    border: none;
+    border: 1px solid var(--c-br-transparent);
     border-radius: 0 var(--br-base) var(--br-base) 0;
     padding: 0 20px;
     width: auto;
@@ -58,7 +58,7 @@ button.button {
         left: -1px;
         height: 70%;
         width: 1px;
-        background-color: var(--c-grey-light);
+        background-color: var(--c-grey-light-only-light);
         transform: translateY(-50%);
     }
 }

@@ -69,7 +69,7 @@ export function CardCharacter({
                                 <svg className={styles.image} viewBox="0 0 710 710" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <rect width="710" height="710" fill="#D9D9D9"/>
                                 </svg>
-                                <div className={styles.loader}></div>
+                                <div className={styles.loader} data-inversed></div>
                             </>
 
                     }

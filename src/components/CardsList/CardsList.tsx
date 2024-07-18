@@ -22,23 +22,26 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
 
     const refContainer = useRef<HTMLUListElement>(null)
     const refObserved = useRef<HTMLDivElement>(null)
+    const refFiltersContainer = useRef<HTMLDivElement>(null)
 
     // guarda el número de la página actual para "infinite scroll"
-    const [currentPage, setCurrentPage] = useState<number | 'filters'>(1)
+    const [currentPage, setCurrentPage] = useState<number | 'filters' | 'search'>(1)
     // guarda el número de la página actual para "infinite scroll" en un ref para observer
     const stateRefPage = useRef(currentPage)
     // datos para renderizar
-    const [cardsDataState, setCardsDataState] = useState<ICardCharacter[]>(cardsData)
+    const [cardsDataState, setCardsData] = useState<ICardCharacter[]>(cardsData)
     // hook para llamar a la API
     const { loading, data, callApi } = useApiCall()
 
     // nombre de la página para los filtros, en vez de un número
-    const pageNameFilters = 'filters'
+    const nameStateFilters = 'filters'
+    const nameStateSearch = 'search'
 
-    // Estados para los filtros:
+    // Estados para los filtros y búsqueda
     const [selectedStatus, setSelectedStatus] = useState<TStatus | null>(null)
     const [selectedGender, setSelectedGender] = useState<TGender | null>(null)
     const [selectedSpecies, setSelectedSpecies] = useState<TSpecies | null>(null)
+    const [searchValue, setSearchValue] = useState<string>('')
 
     /**
      * Añade un observer para detectar cuando el elemento bottom de la pantalla llega al bottom del elemento
@@ -52,7 +55,8 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
-                if (entry.isIntersecting && entry.intersectionRatio > 0 && stateRefPage.current !== pageNameFilters) {
+                if (entry.isIntersecting && entry.intersectionRatio > 0
+                    && stateRefPage.current !== nameStateFilters && stateRefPage.current !== nameStateSearch) {
                     setCurrentPage(stateRefPage.current + 1)
                 }
             })}, options)
@@ -66,14 +70,17 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
     useEffect(() => {
         stateRefPage.current = currentPage
 
-        if (currentPage !== 1 && currentPage !== pageNameFilters) {
+        if (currentPage !== nameStateSearch) {
+            setSearchValue('')
+        }
+        if (currentPage !== 1 && currentPage !== nameStateFilters && currentPage !== nameStateSearch) {
             const pageToQuery = currentPage === 0 ? 1 : currentPage
             callApi(queryBasicCharacterInfo(`page: ${pageToQuery}`))
 
-        // si se los datos son respuesta de los filtros o búsqueda, se resetean los datos actuales
+        // si los datos son respuesta de los filtros o búsqueda, se resetean los datos actuales
         // para mostrar los nuevos datos
-        } else if (currentPage === pageNameFilters) {
-            setCardsDataState([])
+        } else if (currentPage === nameStateFilters || currentPage === nameStateSearch) {
+            setCardsData([])
         }
     }, [currentPage])
 
@@ -82,7 +89,7 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
      */
     useEffect(() => {
         if (data) {
-            setCardsDataState([
+            setCardsData([
                 ...cardsDataState,
                 ...data
             ])
@@ -90,14 +97,46 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
     }, [JSON.stringify(data)])
 
     /**
-     * Salta a una página determinada
+     * Actualiza datos a mostrar llamando a la api en función de los filtros actualizados
+     */
+    useEffect(() => {
+
+        const areFiltersEmpty = selectedStatus === null && selectedGender === null && selectedSpecies === null
+
+        // resetear la búsqueda porque ya no se mostrará
+        setSearchValue('')
+
+        // Este caso se da cuando se han deselecionado todos los filtros
+        if (areFiltersEmpty && currentPage === nameStateFilters) {
+            setCardsData(cardsData)
+            setCurrentPage(1)
+            return
+        }
+        if (areFiltersEmpty) return
+
+        // contruir los filtros para la query
+        const statusFilter = `status: "${selectedStatus || ''}"`
+        const genderFilter = `gender: "${selectedGender || ''}"`
+        const speciesFilter = `species: "${selectedSpecies || ''}"`
+        const filters = [statusFilter, genderFilter, speciesFilter].filter((filter) => filter !== '').join(', ')
+        const queryApi = queryBasicCharacterInfo(`filter: { ${filters} }`)
+
+        setCardsData([])
+        setCurrentPage('filters')
+        callApi(queryApi)
+
+    }, [selectedStatus, selectedGender, selectedSpecies])
+
+    /**
+     * Salta a una página determinada, reseteando los filtros
      *
      * @param {number} num - Número de la página a la que saltar
      * @returns {void}
      */
     const jumpToPage = (num: number): void=> {
+        uncheckFiltersInputs()
         const pageToJumpTo: number = num >= 20 ? (num / 20) + 1 : 0
-        setCardsDataState([])
+        setCardsData([])
         setCurrentPage(pageToJumpTo)
     }
 
@@ -122,38 +161,12 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
      * @returns {void}
      */
     const onSearchInputSubmit = (value: string): void=> {
+        setSearchValue(value)
         callApi(queryBasicCharacterInfo(`filter: { name: "${value}" }`))
-        setCurrentPage(pageNameFilters)
+        setCurrentPage(nameStateSearch)
+        // resetear los filtros porque solo se mostrará la búsqueda
+        uncheckFiltersInputs()
     }
-
-    /**
-     * Actualiza datos a mostrar llamando a la api en función de los filtros actualizados
-     */
-    useEffect(() => {
-
-        const areFiltersEmpty = selectedStatus === null && selectedGender === null && selectedSpecies === null
-
-        // Este caso se da cuando se han deselecionado todos los filtros
-        if (areFiltersEmpty && currentPage === pageNameFilters) {
-            setCardsDataState([])
-            callApi(queryBasicCharacterInfo(`page: 1`))
-            setCurrentPage(1)
-            return
-        }
-        if (areFiltersEmpty) return
-
-
-        const statusFilter = `status: "${selectedStatus || ''}"`
-        const genderFilter = `gender: "${selectedGender || ''}"`
-        const speciesFilter = `species: "${selectedSpecies || ''}"`
-        const filters = [statusFilter, genderFilter, speciesFilter].filter((filter) => filter !== '').join(', ')
-        const queryApi = queryBasicCharacterInfo(`filter: { ${filters} }`)
-
-        setCardsDataState([])
-        setCurrentPage('filters')
-        callApi(queryApi)
-
-    }, [selectedStatus, selectedGender, selectedSpecies])
 
     /**
      * Actualiza datos a mostrar en función de los filtros seleccionados
@@ -176,17 +189,63 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
     }
 
     /**
+     * Devuelve el texto de los filtros seleccionados
+     *
+     * @returns {string} - Texto de los filtros seleccionados
+     * @returns {void}
+     */
+    const getFilterText = (): string=> {
+        let text =  `Characters with `
+
+        if (selectedSpecies) {
+            text += `${selectedSpecies} species`
+        }
+        if (selectedGender) {
+            const separator = selectedGender && selectedStatus
+                ? ',' : selectedStatus
+                    ? ' and' : ''
+            text += `${separator} ${selectedGender} gender`
+        }
+        if (selectedStatus) {
+            const separator = selectedGender || selectedSpecies
+                ? ' and'
+                : ''
+            text += `${separator} ${selectedStatus} status`
+        }
+
+        return text
+    }
+
+    /**
+     * Reinicia los inputs de los filtros
+     *
+     * @returns {void}
+     */
+    const uncheckFiltersInputs = (): void=> {
+        if (!refFiltersContainer.current) return
+        const elsInputs: NodeListOf<HTMLInputElement> = refFiltersContainer.current.querySelectorAll('input[type="checkbox"]')
+
+        elsInputs.forEach((el: HTMLInputElement) => {
+            el.checked = false
+        })
+    }
+
+    // const reserSearchInput = (): void=> {
+    //     setSearchValue('')
+    // }
+
+    /**
      * Devuelve el título de la lista de personajes en función de los filtros seleccionados
      *
      * @returns {string} - Título de la lista de personajes
      * @returns {void}
      */
     const getTextTitle = (): string => {
-        if (selectedStatus !== null || selectedGender  !== null || selectedSpecies !== null) {
-            return `Characters with ${
-                selectedSpecies ? `${selectedSpecies} species` : ''
-                } ${selectedGender ? `${selectedStatus ? ',' : 'and'} ${selectedGender} gender` : ''
-                } ${selectedStatus ? `and ${selectedStatus} status` : ''}`
+
+        if (currentPage === nameStateFilters
+            && (selectedStatus !== null || selectedGender  !== null || selectedSpecies !== null)) {
+            return getFilterText()
+
         } else if (typeof currentPage === "number") {
             if (currentPage >= 10 && currentPage < 20 && cardsDataState.length < 200) {
                 return 'All characters from number 200'
@@ -200,20 +259,26 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
             if (currentPage >= 40 && cardsDataState.length < 800) {
                 return 'All characters from number 800'
             }
+
+        } else if (currentPage === nameStateSearch) {
+            return `Characters containing "${searchValue}"`
         }
+
         return 'All characters'
     }
 
     /**
-     * Reinicia los filtros y la página actual
+     * Reinicia los filtros y actualiza los datos para mostrar los datos ya cargados de la primera página
      *
      * @returns {void}
      */
     const onButtonRestartClick = (): void=> {
+        uncheckFiltersInputs()
         setSelectedStatus(null)
         setSelectedGender(null)
         setSelectedSpecies(null)
         setCurrentPage(1)
+        setCardsData(cardsData)
     }
 
     return (
@@ -225,22 +290,27 @@ export function CardsCharacterList({ cardsData }: ICardsCharacter) {
                     callBackOnBtnClick={jumpToPage}
                 />
             </div>
-            <Filters
-                onButtonRestartClick={onButtonRestartClick}
-                onSearchInputSubmit={onSearchInputSubmit}
-                onSelectionUpdate={updateFilters}
-            />
+            <div ref={refFiltersContainer}>
+                <Filters
+                    onButtonRestartClick={onButtonRestartClick}
+                    onSearchInputSubmit={onSearchInputSubmit}
+                    onSelectionUpdate={updateFilters}
+                    searchInputValue={searchValue}
+                />
+            </div>
             <ul ref={refContainer} className={styles.container}>
-                {
+                {   // Renderizar las cards con la información de los personajes
                     cardsDataState.map((card, i) => {
                         return <CardCharacter {...card} key={`card-${i}`}/>
                     })
                 }
-                {
+                {   // Mostrar loader de cards mientras se cargan los datos
                     loading ? <CardsLoader/> : <></>
                 }
-                {
-                    cardsDataState.length === 0 && !loading ? <p className={styles.noResults}>No results found</p> : <></>
+                {   // Mostrar mensaje de no resultados si no hay datos y no se está cargando
+                    cardsDataState.length === 0 && !loading
+                        ? <p className={styles.noResults}>No results found</p>
+                        : <></>
                 }
             </ul>
             <div

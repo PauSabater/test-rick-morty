@@ -1,17 +1,33 @@
-import { getSlugFromName } from "@/utils/utils"
 import styles from './searchBar.module.scss'
-import { useRef } from "react"
-
+import { useEffect, useRef, useState } from "react"
 
 interface ISearchBar {
     callbackOnSubmit: Function,
-    placeholder: string
+    placeholder: string,
+    searchInputValue: string
 }
 
+/**
+ * Componente para la barra de búsqueda
+ *
+ * @param {Function} param.callbackOnSubmit    - Función para manejar el submit
+ * @param {string}   param.placeholder         - Placeholder para el input
+ * @param {string}   param.searchInputValue    - Valor del input
+ *
+ * @returns {JSX.Element}
+ */
+export const SearchBar = ({
+        callbackOnSubmit,
+        placeholder,
+        searchInputValue
+    }: ISearchBar)=> {
 
-export const SearchBar = ({callbackOnSubmit, placeholder}: ISearchBar)=> {
     const refInput = useRef<HTMLInputElement>(null)
+    const [value, setValue] = useState<string>(searchInputValue)
 
+    useEffect(()=> {
+        setValue(searchInputValue)
+    }, [searchInputValue])
 
     return (
         <div className={styles.container}>
@@ -27,6 +43,8 @@ export const SearchBar = ({callbackOnSubmit, placeholder}: ISearchBar)=> {
                 className={styles.input}
                 placeholder={placeholder}
                 ref={refInput}
+                onChange={(e) => setValue(e.target.value)}
+                value={value}
             >
             </input>
             <button

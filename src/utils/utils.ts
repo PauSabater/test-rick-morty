@@ -57,5 +57,5 @@ export const setModePersist = (value: string)=> {
 }
 
 export const getModePersist = (): string => {
-    return localStorage.getItem('mode') || ''
+    return localStorage?.getItem('mode') || ''
 }

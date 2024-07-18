@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import styles from './linkNextOrPrevious.module.scss'
-import { useEffect } from 'react'
 
 interface ILinkNextOrPrevious {
     path: string,
@@ -10,9 +9,15 @@ interface ILinkNextOrPrevious {
     isNext?: boolean
 }
 /**
- * Renders the header of the app
+ * Componente para enlaces de siguiente o anterior
  *
- * @param {TImageThemes[]}   props.themes     - Array of themes to display
+ * @param {string} props.path     - Ruta a la que se redirige
+ * @param {string} props.text     - Texto del enlace
+ * @param {string} props.textLink - Texto del enlace secundario
+ * @param {string} props.srcImage - Imagen del enlace
+ * @param {boolean} props.isNext  - Indica si es un enlace de siguiente
+ *
+ * @returns {JSX.Element}
  */
 export function LinkNextOrPrevious({
     path,
@@ -20,8 +25,7 @@ export function LinkNextOrPrevious({
     textLink,
     srcImage,
     isNext
-}: ILinkNextOrPrevious) {
-
+}: ILinkNextOrPrevious): JSX.Element {
 
     const TextLink = ()=> {
         return (
@@ -55,5 +59,6 @@ export function LinkNextOrPrevious({
             <TextLink/>
         </Link>
     )
+
     else return <div></div>
 }

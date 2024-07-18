@@ -8,6 +8,7 @@
     display: grid;
     grid-template-columns: repeat(var(--cards-list-columns), 25%);
     grid-gap: var(--grid-gap);
+    margin-top: var(--mg-lg);
     width: calc(100% - var(--grid-gap) * (var(--cards-list-columns) - 1));
     min-height: 100vh;
 
@@ -17,6 +18,7 @@
 
     h1 {
         color: var(--c-font-global);
+        padding-right: 40px;
     }
 }
 
@@ -30,13 +32,16 @@
 }
 
 .title {
-    margin-bottom: var(--mg-lg);
+    margin-bottom: 0;
     font-size: var(--fs-xl);
+    padding-right: 30px;
 }
 
 .head {
     display: flex;
     justify-content: space-between;
+    min-height: 70px;
+    align-items: flex-start;
 }
 
 .noResults {

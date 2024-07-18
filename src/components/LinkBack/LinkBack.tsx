@@ -2,9 +2,12 @@ import Link from 'next/link'
 import styles from './linkBack.module.scss'
 
 /**
- * Renders the header of the app
+ * Componente para enlaces de regreso
  *
- * @param {TImageThemes[]}   props.themes     - Array of themes to display
+ * @param {string} props.path - Ruta a la que se redirige
+ * @param {string} props.text - Texto del enlace
+ *
+ * @returns {JSX.Element}
  */
 export function LinkBack({path, text}: {path: string, text: string}) {
 

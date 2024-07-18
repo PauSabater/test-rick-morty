@@ -14,11 +14,3 @@
     border: none;
     height: 100%;
 }
-
-@include mixins.mobile-tablet {
-    .button {
-        left: 0;
-        right: unset;
-        top: 50px;
-    }
-}

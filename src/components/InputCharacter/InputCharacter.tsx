@@ -1,7 +1,17 @@
 import { getSlugFromName } from "@/utils/utils"
 import styles from './inputCharacter.module.scss'
 
-
+/** Componente para mostrar un input con la imagen y nombre de un personaje
+ *
+ * @param {string} param.id           - ID del personaje
+ * @param {string} param.image        - URL de la imagen
+ * @param {string} param.name         - Nombre del personaje
+ * @param {boolean} param.checked     - Estado del input
+ * @param {Function} param.onChange   - Función para manejar el cambio del input
+ * @param {boolean} [param.isInModal] - Indica si el input está en los resultados
+ *
+ * @returns {JSX.Element}
+ */
 export const InputCharacter = ({id, image, name, checked, onChange, isInModal}: {
         id: string | undefined,
         image: string | undefined,
