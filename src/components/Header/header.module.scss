@@ -61,9 +61,16 @@
 }
 
 @include mixins.mobile {
+    .container {
+        padding-right: 40px;
+    }
+
     .logo {
+        margin-right: 60px;
+
         p {
             font-size: var(--fs-sm);
+            margin-right: 60px;
         }
     }
 
